@@ -25,10 +25,10 @@ struct RegexRules {
     std::pair<const char *, const char *> images = {R"(!\[(.*?)\]\((.*?)\))", R"(<img src="$2" alt="$1">)"};
 
     // lists rules :
-    /*
-     *Moved to the md_parser.cpp file due to multiple level of nesting into lists.
-     */
-
+    std::pair<const char *, const char *> unorderedList = {R"(\s*\*\s+(.*)\n)", "\n<li>$1</li>"};
+    std::pair<const char *, const char *> orderedList = {R"(\s*\d+\.\s+(.*)\n)", "\n<li>$1</li>"};
+    std::pair<const char *, const char *> checkListUnchecked = {R"(\s*\-\s+\[ \]\s+(.*)\n)", "\n<li><input type=\"checkbox\">$1</li>"};
+    std::pair<const char *, const char *> checkListChecked = {R"(\s*\-\s+\[x\]\s+(.*)\n)", "\n<li><input type=\"checkbox\" checked>$1</li>"};
     // blockquotes and code blocks rules :
 
     // horizontal rules and escape characters rules :

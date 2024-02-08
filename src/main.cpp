@@ -1,33 +1,46 @@
+#include <fstream>
 #include <iostream>
+#include <string>
 
 #include "markdown_parser/md_parser.h"
 
+
+
 int main()
 {
-    std::string markdown = R"(# Heading 1
+    std::ifstream inputFile("../test/test.md");
 
-## Heading 2
+    if (!inputFile.is_open()) {
+        std::cerr << "Error: Unable to open input file.\n";
+        return 1;
+    }
 
-This is a paragraph with some **bold** and *italic* text.
+    std::stringstream buffer;
+    buffer << inputFile.rdbuf();
+    std::string markdownContent = buffer.str();
 
-There is also some ~~strikethrough~~ text.
+    // Close the input file
+    inputFile.close();
 
-And also ***bold italic*** text.
+    std::ofstream outputFile("../test/result.html");
+    if (!outputFile.is_open()) {
+        std::cerr << "Error: Unable to open output file.\n";
+        return 1;
+    }
 
-* Unordered List Item 1
-    * Nested Unordered List Item 1
-    * Nested Unordered List Item 2
-        * This is too much
-* Unordered List Item 2
+    outputFile << "<!DOCTYPE html>\n"
+                 "<html>\n"
+                 "<head>\n"
+                 "<title>Markdown to HTML</title>\n"
+                 "</head>\n"
+                 "<body>\n";
 
-1. Ordered List Item 1
-2. Ordered List Item 2
-
-![Alt text](image.jpg)
-
-[Link Text](https://www.example.com)
-)";
     MarkdownParser md_parser;
-    std::cout << md_parser.parse(markdown) << std::endl;
+
+    outputFile << md_parser.parse(markdownContent) << "\n";
+
+    outputFile << "</body>\n"
+                  "</html>\n";
+
     return 0;
 }

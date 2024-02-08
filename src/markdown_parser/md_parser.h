@@ -41,6 +41,8 @@ private:
 
     std::string parseOrderedList(const std::string& md_text);
 
+    std::string parseCheckList(const std::string& md_text);
+
     std::string parseBlockQuotes(const std::string& md_text);
 
     std::string parseCodeBlocks(const std::string& md_text);
@@ -63,6 +65,8 @@ private:
 
     std::string parseItem(const std::string& md_text, const std::regex& reg, const std::string& replacement);
 
+    // Enclosure of htlm tags
+    std::string enclosure(const std::string& md_text, const std::string& first_tag, const std::string& second_tag);
 };
 
 
