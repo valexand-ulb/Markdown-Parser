@@ -21,12 +21,23 @@ struct RegexRules {
     std::pair<const char *, const char *> paragraph = {"(?:\n\n|^)(.*)", "<p>$1</p>\n"};
 
     // links and images rules :
-    std::pair<const char *, const char *> links = {"\\[([^\\[]+)\\]\\(([^\\)]+)\\)", "<a href=\"$2\">$1</a>"};
-    std::pair<const char *, const char *> images = {"!\\[(.*?)\\]\\((.*?)\\)", "<img src=\"$2\" alt=\"$1\">"};
+    std::pair<const char *, const char *> links = {R"(\[([^\[]+)\]\(([^\)]+)\))", "<a href=\"$2\">$1</a>"};
+    std::pair<const char *, const char *> images = {R"(!\[(.*?)\]\((.*?)\))", R"(<img src="$2" alt="$1">)"};
 
     // lists rules :
-    std::pair<const char *, const char *> unordered_list = {"^\\s*[\\*\\-\\+]\\s+(.*)$", "<ul><li>$1</li></ul>"};
-    std::pair<const char *, const char *> ordered_list = {"^\\s*\\d+\\.\\s+(.*)$", "\n<ol>\n  <li>$1</li>\n</ol>"};
+    /*
+     *Moved to the md_parser.cpp file due to multiple level of nesting into lists.
+     */
+
+    // blockquotes and code blocks rules :
+
+    // horizontal rules and escape characters rules :
+
+    // inline code rules :
+
+    // extended markdown parsing rules :
+    // tables, footnotes and highlight rules :
+    std::pair<const char *, const char *> table = {"|(?:([^\r\n|]*)\\|)+\r?\n\\|(?:(:?-+:?)\\|)+\r?\n(\\|(?:([^\r\n|]*)\\|)+\r?\n)+", "<table><tr><th>$1</th></tr><tr><td>$3</td></tr></table>"};
 };
 
 #endif //REGEX_RULES_H

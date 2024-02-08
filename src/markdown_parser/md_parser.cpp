@@ -90,16 +90,28 @@ std::string MarkdownParser::parseImages(const std::string &md_text) {
 std::string MarkdownParser::parseLists(const std::string &md_text) {
     std::string parsed_text = md_text;
     parsed_text = parseUnorderedList(parsed_text);
-    parsed_text = parseOrderedList(parsed_text);
+    //parsed_text = parseOrderedList(parsed_text);
     return parsed_text;
 }
 
-std::string MarkdownParser::parseUnorderedList(const std::string &md_text) {
-    std::regex reg(regex_rules.unordered_list.first);
-    return parseItem(md_text, reg, regex_rules.unordered_list.second);
+std::string MarkdownParser::parseUnorderedList(const std::string& markdown) {
+    std::regex ulRegex(R"(^\s*\*\s+(.*)$)", std::regex_constants::multiline);
+    std::regex nestedUlRegex(R"(^\s{4,}\*\s+(.*)$)", std::regex_constants::multiline);
+
+    // Replace unordered lists with HTML <ul> tags
+    std::string html = std::regex_replace(markdown, ulRegex, "<ul>\n$&\n</ul>");
+
+    // Replace nested unordered lists with HTML <ul> tags within <li> tags
+    html = std::regex_replace(html, nestedUlRegex, "<ul>\n$&\n</ul>");
+
+    // Replace list items with HTML <li> tags
+    html = std::regex_replace(html, std::regex(R"(^\s*\*\s+(.*)$)", std::regex_constants::multiline), "<li>$1</li>");
+
+    // Return the HTML
+    return html;
 }
 
-std::string MarkdownParser::parseOrderedList(const std::string &md_text) {
-    std::regex reg(regex_rules.ordered_list.first);
-    return parseItem(md_text, reg, regex_rules.ordered_list.second);
-}
+// std::string MarkdownParser::parseOrderedList(const std::string &md_text) {
+//     std::regex reg(regex_rules.ordered_list.first);
+//     return parseItem(md_text, reg, regex_rules.ordered_list.second);
+// }
