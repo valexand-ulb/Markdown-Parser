@@ -16,12 +16,15 @@ std::string MarkdownParser::parse(const std::string &md_text) {
     parsed_text = parseItalic(parsed_text);
     parsed_text = parseStrikethrough(parsed_text);
 
+    parsed_text = parseLists(parsed_text);
+
     parsed_text = parseImages(parsed_text);
     parsed_text = parseLinks(parsed_text);
 
-    parsed_text = parseParagraphs(parsed_text);
 
-    // parsed_text = parseLists(parsed_text);
+
+    //parsed_text = parseParagraphs(parsed_text);
+
     // parsed_text = parseBlockQuotes(parsed_text);
     // parsed_text = parseCodeBlocks(parsed_text);
     // parsed_text = parseHorizontalRules(parsed_text);
@@ -82,4 +85,21 @@ std::string MarkdownParser::parseLinks(const std::string &md_text) {
 std::string MarkdownParser::parseImages(const std::string &md_text) {
     std::regex reg(regex_rules.images.first);
     return parseItem(md_text, reg, regex_rules.images.second);
+}
+
+std::string MarkdownParser::parseLists(const std::string &md_text) {
+    std::string parsed_text = md_text;
+    parsed_text = parseUnorderedList(parsed_text);
+    parsed_text = parseOrderedList(parsed_text);
+    return parsed_text;
+}
+
+std::string MarkdownParser::parseUnorderedList(const std::string &md_text) {
+    std::regex reg(regex_rules.unordered_list.first);
+    return parseItem(md_text, reg, regex_rules.unordered_list.second);
+}
+
+std::string MarkdownParser::parseOrderedList(const std::string &md_text) {
+    std::regex reg(regex_rules.ordered_list.first);
+    return parseItem(md_text, reg, regex_rules.ordered_list.second);
 }

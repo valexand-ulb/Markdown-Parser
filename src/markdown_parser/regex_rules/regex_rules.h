@@ -18,11 +18,15 @@ struct RegexRules {
     std::pair<const char *, const char *> bold = {"/\\*\\*\\s?([^\n]+)\\*\\*/g", "<strong>$1</strong>"};
     std::pair<const char *, const char *> italic = {"\\*(.*?)\\*", "<em>$1</em>"};
     std::pair<const char *, const char *> strikethrough = {"~~(.*?)~~", "<del>$1</del>"};
-    std::pair<const char *, const char *> paragraph = {"(?:\n\n|^)(.*)", "<p>$1</p>"};
+    std::pair<const char *, const char *> paragraph = {"(?:\n\n|^)(.*)", "<p>$1</p>\n"};
 
     // links and images rules :
     std::pair<const char *, const char *> links = {"\\[([^\\[]+)\\]\\(([^\\)]+)\\)", "<a href=\"$2\">$1</a>"};
     std::pair<const char *, const char *> images = {"!\\[(.*?)\\]\\((.*?)\\)", "<img src=\"$2\" alt=\"$1\">"};
+
+    // lists rules :
+    std::pair<const char *, const char *> unordered_list = {"^\\s*[\\*\\-\\+]\\s+(.*)$", "<ul><li>$1</li></ul>"};
+    std::pair<const char *, const char *> ordered_list = {"^\\s*\\d+\\.\\s+(.*)$", "\n<ol>\n  <li>$1</li>\n</ol>"};
 };
 
 #endif //REGEX_RULES_H
