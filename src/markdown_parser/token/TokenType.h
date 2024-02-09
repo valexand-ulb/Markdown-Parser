@@ -12,6 +12,7 @@ enum class TokenType {
     HEADER4,
     HEADER5,
     HEADER6,
+    BOLDITALIC,
     BOLD,
     ITALIC,
     STRIKETHROUGH,

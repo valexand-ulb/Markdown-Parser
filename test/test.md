@@ -1,12 +1,15 @@
-# Heading 1
-
-## Heading 2
+# Header 1
+## Header 2
+### Header 3
+#### Header 4
+##### Header 5
+###### Header 6
 
 This is a paragraph with some **bold** and *italic* text.
-
+ 
 There is also some ~~strikethrough~~ text.
 
-And also ***bold italic*** text.
+And also ***bold-italic*** text.
 
 * Unordered List Item 1
 * Unordered List Item 2

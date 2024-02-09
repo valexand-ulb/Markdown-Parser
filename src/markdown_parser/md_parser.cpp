@@ -4,78 +4,43 @@
 
 #include <stack>
 #include <iostream>
-
 #include "md_parser.h"
 #include "regex_rules/regex_rules.h"
 
-void MarkdownParser::parse(const std::string &md_text) {
+std::string MarkdownParser::parse(const std::string &md_text) {
+    std::string parsed_text;
+    md_to_hmtl_simple_remplacement(md_text);
 
-    std::smatch match;
-    std::stringstream stream(md_text);
-    std::string line;
-
-    while (std::getline(stream, line)) {
-        if (std::regex_search(line, match, std::regex(regex_rules.h1.first))) {
-            tokens.push({match.str(1), TokenType::HEADER1});
-        }
-        else if (std::regex_search(line,match,std::regex(regex_rules.h2.first))) {
-            tokens.push({match.str(1), TokenType::HEADER2});
-        }
-        else if (std::regex_search(line,match,std::regex(regex_rules.h3.first))) {
-            tokens.push({match.str(1), TokenType::HEADER3});
-        }
-        else if (std::regex_search(line,match,std::regex(regex_rules.h4.first))) {
-            tokens.push({match.str(1), TokenType::HEADER4});
-        }
-        else if (std::regex_search(line,match,std::regex(regex_rules.h5.first))) {
-            tokens.push({match.str(1), TokenType::HEADER5});
-        }
-        else if (std::regex_search(line,match,std::regex(regex_rules.h6.first))) {
-            tokens.push({match.str(1), TokenType::HEADER6});
-        }
-        else if (std::regex_search(line,match,std::regex(regex_rules.bold.first))) {
-            tokens.push({match.str(1), TokenType::BOLD});
-        }
-        else if (std::regex_search(line,match,std::regex(regex_rules.italic.first))) {
-            tokens.push({match.str(1), TokenType::ITALIC});
-        }
-        else if (std::regex_search(line,match,std::regex(regex_rules.strikethrough.first))) {
-            tokens.push({match.str(1), TokenType::STRIKETHROUGH});
-        }
-        else if (std::regex_search(line,match,std::regex(regex_rules.paragraph.first))) {
-            tokens.push({match.str(1), TokenType::PARAGRAPH});
-        }
-        else if (std::regex_search(line,match,std::regex(regex_rules.links.first))) {
-            tokens.push({match.str(1), TokenType::LINKS});
-        }
-        else if (std::regex_search(line,match,std::regex(regex_rules.images.first))) {
-            tokens.push({match.str(1), TokenType::IMAGES});
-        }
-        else if (std::regex_search(line,match,std::regex(regex_rules.unorderedList.first))) {
-            tokens.push({match.str(1), TokenType::UNORDERED_LIST});
-        }
-        else if (std::regex_search(line,match,std::regex(regex_rules.orderedList.first))) {
-            tokens.push({match.str(1), TokenType::ORDERED_LIST});
-        }
-        else if (std::regex_search(line,match,std::regex(regex_rules.checkListUnchecked.first))) {
-            tokens.push({match.str(1), TokenType::CHECKLISTUNCHECKED});
-        }
-    }
+    return parsed_text;
 }
 
-void MarkdownParser::printTokens() {
-    while (!tokens.empty()) {
-        std::cout << tokens.top().value << std::endl;
-        tokens.pop();
-    }
+/**
+ * @brief Parse the markdown text and replace it in the go with the html equivalent for the simple rules
+ *
+ * @param md_text : The markdown text to parse
+ * @return std::string : The parsed text with the html equivalent
+ */
+std::string MarkdownParser::md_to_hmtl_simple_remplacement(const std::string& md_text) {
+    std::string parsed_text = md_text;
+
+    parsed_text = parseHeaders(parsed_text);
+
+    parsed_text = parseBold(parsed_text);
+    parsed_text = parseItalic(parsed_text);
+    parsed_text = parseStrikethrough(parsed_text);
+
+    parsed_text = parseImages(parsed_text);
+    parsed_text = parseLinks(parsed_text);
+
+    return parsed_text;
 }
 
-/*
-std::string MarkdownParser::parseItem(const std::string&md_text, const std::regex& reg, const std::string& replacement) {
-    return std::regex_replace(md_text, reg, replacement);
-}
-
-
+/**
+ * @brief Parse the headers of the markdown text
+ *
+ * @param md_text : The markdown text to parse
+ * @return std::string : The parsed text with the html equivalent for the headers
+ */
 std::string MarkdownParser::parseHeaders(const std::string &md_text) {
     std::regex reg(regex_rules.h6.first);
     std::string parsed_text = parseItem(md_text, reg, regex_rules.h6.second);
@@ -92,82 +57,69 @@ std::string MarkdownParser::parseHeaders(const std::string &md_text) {
     return parsed_text;
 }
 
+/**
+ * @brief Parse the bold of the markdown text
+ *
+ * @param md_text : The markdown text to parse
+ * @return std::string : The parsed text with the html equivalent for the bold
+ */
 std::string MarkdownParser::parseBold(const std::string &md_text) {
     std::regex reg(regex_rules.bold.first);
     return parseItem(md_text, reg, regex_rules.bold.second);
 }
 
+/**
+ * @brief Parse the italic of the markdown text
+ *
+ * @param md_text : The markdown text to parse
+ * @return std::string : The parsed text with the html equivalent for the italic
+ */
 std::string MarkdownParser::parseItalic(const std::string &md_text) {
     std::regex reg(regex_rules.italic.first);
     return parseItem(md_text, reg, regex_rules.italic.second);
 }
 
+/**
+ * @brief Parse the strikethrough of the markdown text
+ *
+ * @param md_text : The markdown text to parse
+ * @return std::string : The parsed text with the html equivalent for the strikethrough
+ */
 std::string MarkdownParser::parseStrikethrough(const std::string &md_text) {
     std::regex reg(regex_rules.strikethrough.first);
     return parseItem(md_text, reg, regex_rules.strikethrough.second);
 }
 
-std::string MarkdownParser::parseParagraphs(const std::string&md_text) {
-    std::regex reg(regex_rules.paragraph.first);
-    return parseItem(md_text, reg, regex_rules.paragraph.second);
-}
-
+/**
+ * @brief Parse the links of the markdown text
+ *
+ * @param md_text : The markdown text to parse
+ * @return std::string : The parsed text with the html equivalent for the links
+ */
 std::string MarkdownParser::parseLinks(const std::string &md_text) {
     std::regex reg(regex_rules.links.first);
     return parseItem(md_text, reg, regex_rules.links.second);
 }
 
+/**
+ * @brief Parse the images of the markdown text
+ *
+ * @param md_text : The markdown text to parse
+ * @return std::string : The parsed text with the html equivalent for the images
+ */
 std::string MarkdownParser::parseImages(const std::string &md_text) {
     std::regex reg(regex_rules.images.first);
     return parseItem(md_text, reg, regex_rules.images.second);
 }
 
-std::string MarkdownParser::parseLists(const std::string &md_text) {
-    std::string parsed_text = md_text;
-    parsed_text = parseUnorderedList(md_text);
-    parsed_text = parseOrderedList(parsed_text);
-    parsed_text = parseCheckList(parsed_text);
-    return parsed_text;
+/**
+ * @brief Parse the markdown text with the regex and replace it with the replacement
+ *
+ * @param md_text : The markdown text to parse
+ * @param reg : The regex to use for the parsing
+ * @param replacement : The replacement to use for the parsing
+ * @return std::string : The parsed text
+ */
+std::string MarkdownParser::parseItem(const std::string&md_text, const std::regex& reg, const std::string& replacement) {
+    return std::regex_replace(md_text, reg, replacement);
 }
-
-std::string MarkdownParser::parseUnorderedList(const std::string& md_text) {
-    std::string parsed_text = parseItem(md_text, std::regex(regex_rules.unorderedList.first), regex_rules.unorderedList.second);
-
-    enclosure(parsed_text, "<ul>\n", "</ul>\n");
-    return parsed_text;
-}
-
-std::string MarkdownParser::parseOrderedList(const std::string &md_text) {
-    std::string parsed_text = parseItem(md_text, std::regex(regex_rules.orderedList.first), regex_rules.orderedList.second);
-    return parsed_text;
-}
-
-std::string MarkdownParser::parseCheckList(const std::string& md_text) {
-    std::string parsed_text = parseItem(md_text, std::regex(regex_rules.checkListUnchecked.first), regex_rules.checkListUnchecked.second);
-    parsed_text = parseItem(parsed_text, std::regex(regex_rules.checkListChecked.first), regex_rules.checkListChecked.second);
-    return parsed_text;
-}
-
-std::string MarkdownParser::enclosure(const std::string&md_text, const std::string& first_tag, const std::string& second_tag) {
-    std::regex li_regex("^<li>.*</li>$", std::regex_constants::icase | std::regex_constants::multiline);
-
-    std::smatch match;
-    std::string ul_block;
-
-    // Find the biggest <li> block
-    auto start = std::sregex_iterator(md_text.begin(), md_text.end(), li_regex);
-    auto end = std::sregex_iterator();
-    std::sregex_iterator biggest = start;
-    for (std::sregex_iterator i = start; i != end; ++i) {
-        if (i->str().size() > biggest->str().size()) {
-            biggest = i;
-        }
-    }
-    // Enclose the biggest <li> block in <ul></ul>
-    ul_block += first_tag;
-    ul_block += biggest->str();
-    ul_block += second_tag;
-
-    return ul_block;
-}
-*/

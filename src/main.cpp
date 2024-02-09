@@ -26,7 +26,6 @@ int main()
 
     MarkdownParser md_parser;
 
-    md_parser.parse(markdownContent);
-    md_parser.printTokens();
+    std::cout << md_parser.parse(markdownContent) << std::endl;
     return 0;
 }

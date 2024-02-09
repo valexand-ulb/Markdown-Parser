@@ -8,20 +8,15 @@
 #include <regex>
 
 #include "regex_rules/regex_rules.h"
-#include "token/Token.h"
 
 
 class MarkdownParser {
 
 public:
-
-    void parse(const std::string &md_text);
-
-    void printTokens();
+    std::string parse(const std::string &md_text);
 
 private:
     RegexRules regex_rules;
-    std::stack<Token> tokens;
 
     // base markdown parsing
 
@@ -33,45 +28,19 @@ private:
 
     std::string parseStrikethrough(const std::string& md_text);
 
-    std::string parseParagraphs(const std::string& md_text);
-
     std::string parseLinks(const std::string& md_text);
 
     std::string parseImages(const std::string& md_text);
-
-    std::string parseLists(const std::string& md_text); // unordered and ordered lists
-
-    std::string parseUnorderedList(const std::string& md_text);
-
-    std::string parseOrderedList(const std::string& md_text);
-
-    std::string parseCheckList(const std::string& md_text);
-
-    std::string parseBlockQuotes(const std::string& md_text);
-
-    std::string parseCodeBlocks(const std::string& md_text);
-
-    std::string parseHorizontalRules(const std::string& md_text);
-
-    std::string parseEscapeCharacters(const std::string& md_text);
-
-    std::string parseInlineCode(const std::string& md_text);
-
-    // extended markdown parsing
-
-    std::string parseTables(const std::string& md_text);
-
-    std::string parseFootnotes(const std::string& md_text);
-
-    std::string parseHighlight(const std::string& md_text);
 
     // generic parsing
 
     std::string parseItem(const std::string& md_text, const std::regex& reg, const std::string& replacement);
 
-    // Enclosure of htlm tags
-    std::string enclosure(const std::string& md_text, const std::string& first_tag, const std::string& second_tag);
+    std::string md_to_hmtl_simple_remplacement(const std::string&md_text);
+
 };
+
+
 
 
 
