@@ -8,37 +8,69 @@
 #include "md_parser.h"
 #include "regex_rules/regex_rules.h"
 
-std::string MarkdownParser::parse(const std::string &md_text) {
-    std::string parsed_text = md_text;
+void MarkdownParser::parse(const std::string &md_text) {
 
+    std::smatch match;
+    std::stringstream stream(md_text);
+    std::string line;
 
-
-    parsed_text = parseHeaders(parsed_text);
-
-    parsed_text = parseBold(parsed_text);
-    parsed_text = parseItalic(parsed_text);
-    parsed_text = parseStrikethrough(parsed_text);
-
-    parsed_text = parseLists(parsed_text);
-
-    parsed_text = parseImages(parsed_text);
-    parsed_text = parseLinks(parsed_text);
-
-
-
-    //parsed_text = parseParagraphs(parsed_text);
-
-    // parsed_text = parseBlockQuotes(parsed_text);
-    // parsed_text = parseCodeBlocks(parsed_text);
-    // parsed_text = parseHorizontalRules(parsed_text);
-    // parsed_text = parseEscapeCharacters(parsed_text);
-    // parsed_text = parseInlineCode(parsed_text);
-    // parsed_text = parseTables(parsed_text);
-    // parsed_text = parseFootnotes(parsed_text);
-    // parsed_text = parseHighlight(parsed_text);
-    return parsed_text;
+    while (std::getline(stream, line)) {
+        if (std::regex_search(line, match, std::regex(regex_rules.h1.first))) {
+            tokens.push({match.str(1), TokenType::HEADER1});
+        }
+        else if (std::regex_search(line,match,std::regex(regex_rules.h2.first))) {
+            tokens.push({match.str(1), TokenType::HEADER2});
+        }
+        else if (std::regex_search(line,match,std::regex(regex_rules.h3.first))) {
+            tokens.push({match.str(1), TokenType::HEADER3});
+        }
+        else if (std::regex_search(line,match,std::regex(regex_rules.h4.first))) {
+            tokens.push({match.str(1), TokenType::HEADER4});
+        }
+        else if (std::regex_search(line,match,std::regex(regex_rules.h5.first))) {
+            tokens.push({match.str(1), TokenType::HEADER5});
+        }
+        else if (std::regex_search(line,match,std::regex(regex_rules.h6.first))) {
+            tokens.push({match.str(1), TokenType::HEADER6});
+        }
+        else if (std::regex_search(line,match,std::regex(regex_rules.bold.first))) {
+            tokens.push({match.str(1), TokenType::BOLD});
+        }
+        else if (std::regex_search(line,match,std::regex(regex_rules.italic.first))) {
+            tokens.push({match.str(1), TokenType::ITALIC});
+        }
+        else if (std::regex_search(line,match,std::regex(regex_rules.strikethrough.first))) {
+            tokens.push({match.str(1), TokenType::STRIKETHROUGH});
+        }
+        else if (std::regex_search(line,match,std::regex(regex_rules.paragraph.first))) {
+            tokens.push({match.str(1), TokenType::PARAGRAPH});
+        }
+        else if (std::regex_search(line,match,std::regex(regex_rules.links.first))) {
+            tokens.push({match.str(1), TokenType::LINKS});
+        }
+        else if (std::regex_search(line,match,std::regex(regex_rules.images.first))) {
+            tokens.push({match.str(1), TokenType::IMAGES});
+        }
+        else if (std::regex_search(line,match,std::regex(regex_rules.unorderedList.first))) {
+            tokens.push({match.str(1), TokenType::UNORDERED_LIST});
+        }
+        else if (std::regex_search(line,match,std::regex(regex_rules.orderedList.first))) {
+            tokens.push({match.str(1), TokenType::ORDERED_LIST});
+        }
+        else if (std::regex_search(line,match,std::regex(regex_rules.checkListUnchecked.first))) {
+            tokens.push({match.str(1), TokenType::CHECKLISTUNCHECKED});
+        }
+    }
 }
 
+void MarkdownParser::printTokens() {
+    while (!tokens.empty()) {
+        std::cout << tokens.top().value << std::endl;
+        tokens.pop();
+    }
+}
+
+/*
 std::string MarkdownParser::parseItem(const std::string&md_text, const std::regex& reg, const std::string& replacement) {
     return std::regex_replace(md_text, reg, replacement);
 }
@@ -138,6 +170,4 @@ std::string MarkdownParser::enclosure(const std::string&md_text, const std::stri
 
     return ul_block;
 }
-
-
-
+*/

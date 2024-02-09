@@ -8,16 +8,20 @@
 #include <regex>
 
 #include "regex_rules/regex_rules.h"
+#include "token/Token.h"
 
 
 class MarkdownParser {
 
 public:
 
-    std::string parse(const std::string &md_text);
+    void parse(const std::string &md_text);
+
+    void printTokens();
 
 private:
     RegexRules regex_rules;
+    std::stack<Token> tokens;
 
     // base markdown parsing
 
