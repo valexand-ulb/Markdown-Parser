@@ -6,7 +6,7 @@
 #define REGEX_RULES_H
 #include "../token/TokenType.h"
 
-struct RegexRules {
+struct RegexRemplacementRules {
     //  headers rules :
     std::pair<const char *, const char *> h1 = {"# (.*)", "<h1>$1</h1>"};
     std::pair<const char *, const char *> h2 = {"## (.*)", "<h2>$1</h2>"};
@@ -19,7 +19,6 @@ struct RegexRules {
     std::pair<const char *, const char *> bold = {R"(\*\*\s?([^\n]+)\*\*)", "<strong>$1</strong>"};
     std::pair<const char *, const char *> italic = {R"(\*(.*?)\*)", "<em>$1</em>"};
     std::pair<const char *, const char *> strikethrough = {"~~(.*?)~~", "<del>$1</del>"};
-    std::pair<const char *, const char *> paragraph = {"(?:\n\n|^)(.*)", "<p>$1</p>"};
 
     // links and images rules :
     std::pair<const char *, const char *> links = {R"(\[([^\[]+)\]\(([^\)]+)\))", "<a href=\"$2\">$1</a>"};

@@ -5,11 +5,17 @@
 #include <stack>
 #include <iostream>
 #include "md_parser.h"
-#include "regex_rules/regex_rules.h"
+#include "regex_rules/regex_remplacement_rules.h"
 
 std::string MarkdownParser::parse(const std::string &md_text) {
     std::string parsed_text;
-    md_to_hmtl_simple_remplacement(md_text);
+
+    // first we parse the simple rules
+    parsed_text = md_to_hmtl_simple_remplacement(md_text);
+
+    // then we tokenize and parse for complex rules
+    parsed_text = parseLists(parsed_text);
+
 
     return parsed_text;
 }
@@ -112,6 +118,7 @@ std::string MarkdownParser::parseImages(const std::string &md_text) {
     return parseItem(md_text, reg, regex_rules.images.second);
 }
 
+
 /**
  * @brief Parse the markdown text with the regex and replace it with the replacement
  *
@@ -122,4 +129,114 @@ std::string MarkdownParser::parseImages(const std::string &md_text) {
  */
 std::string MarkdownParser::parseItem(const std::string&md_text, const std::regex& reg, const std::string& replacement) {
     return std::regex_replace(md_text, reg, replacement);
+}
+
+
+std::string MarkdownParser::parseLists(const std::string&md_text) {
+    std::string parsed_text = md_text;
+
+    parseTypedLists(md_text, token_rules.unordered_list);
+    parsed_text = ListTokenToHtml();
+    tokens.clear();
+
+    parseTypedLists(parsed_text, token_rules.ordered_list);
+    parsed_text = ListTokenToHtml();
+    tokens.clear();
+
+    parseTypedLists(parsed_text, token_rules.checklist);
+    parsed_text = ListTokenToHtml();
+    tokens.clear();
+    return parsed_text;
+}
+
+void MarkdownParser::parseTypedLists(const std::string& md_text, const std::pair<const char *, TokenType>& token_rule) {
+    std::regex reg(token_rule.first, std::regex_constants::multiline);
+
+    std::sregex_iterator next(md_text.begin(),md_text.end(), reg);
+    std::sregex_iterator end;
+
+    int last_index = 0;
+    for (; next != end; next++) {
+        std::smatch match = *next;
+
+        // non matched text
+        if (match.position() > last_index) {
+            std::string nonMatchedText = md_text.substr(last_index, match.position() - last_index);
+            tokens.push_back(Token(nonMatchedText, TokenType::TEXT));
+        }
+        tokens.push_back({match.str(), token_rule.second});
+        last_index = match.position() + match.length();
+    }
+    if (last_index < md_text.length()) {
+        std::string nonMatchedText = md_text.substr(last_index, md_text.length() - last_index);
+        tokens.push_back(Token(nonMatchedText, TokenType::TEXT));
+    }
+
+}
+
+std::string MarkdownParser::ListTokenToHtml() {
+    std::string final_string;
+    for (auto &token : tokens) {
+       switch (token.type) {
+           case TokenType::UNORDERED_LIST:
+               final_string += md_unordered_list_to_html(token.value);
+               break;
+           case TokenType::ORDERED_LIST:
+                final_string += md_ordered_list_to_html(token.value);
+                break;
+           case TokenType::CHECKLIST:
+               final_string += md_checklist_to_html(token.value);
+               break;
+           case TokenType::TEXT:
+                final_string += token.value;
+                break;
+       }
+    }
+    return final_string;
+}
+
+std::string MarkdownParser::md_unordered_list_to_html(const std::string&md_text) {
+    std::string final_string = "<ul>\n";
+    std::smatch match;
+    std::regex reg(R"(^[-\*\+]\s+(.+)$)", std::regex_constants::multiline);
+
+    std::string::const_iterator searchStart( md_text.cbegin() );
+    while (std::regex_search(searchStart, md_text.cend(), match, reg)) {
+        final_string += "<li>" + match[1].str() + "</li>\n";
+        searchStart = match.suffix().first;
+    }
+
+    final_string += "</ul>\n";
+    return final_string;
+}
+
+std::string MarkdownParser::md_ordered_list_to_html(const std::string&md_text) {
+    std::string final_string = "<ol>\n";
+    std::smatch match;
+    std::regex reg(R"(^\d+\.\s+(.+)$)", std::regex_constants::multiline);
+
+    std::string::const_iterator searchStart( md_text.cbegin() );
+    while (std::regex_search(searchStart, md_text.cend(), match, reg)) {
+        final_string += "<li>" + match[1].str() + "</li>\n";
+        searchStart = match.suffix().first;
+    }
+    final_string += "</ol>\n";
+    return final_string;
+}
+
+std::string MarkdownParser::md_checklist_to_html(const std::string&md_text) {
+    std::string final_string = "<ul>\n";
+    std::smatch match;
+    std::regex checkboxPattern("- \\[( |x|X)\\] (.*)");
+
+    std::string remainingText = md_text;
+    while (std::regex_search(remainingText, match, checkboxPattern)) {
+        std::string checkbox = match[1].str();
+        std::string text = match[2].str();
+        std::string checked = checkbox == " " ? "" : "checked";
+        final_string += "<li><input type=\"checkbox\" " + checked + ">" + text + "</li>\n";
+        remainingText = match.suffix().str();
+    }
+    final_string += "</ul>\n";
+    return final_string;
 }
