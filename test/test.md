@@ -19,6 +19,14 @@ And also ***bold-italic*** text.
 2. Ordered List Item 2
 3. Ordered List Item 3
 
+* Unordered List Item 4
+* Unordered List Item 5
+* Unordered List Item 6
+
+1. Ordered List Item 1
+2. Ordered List Item 2
+3. Ordered List Item 3
+
 - [ ] Task 1
 - [x] Task 2
 

@@ -5,11 +5,17 @@
 #include <stack>
 #include <iostream>
 #include "md_parser.h"
-#include "regex_rules/regex_rules.h"
+#include "regex_rules/regex_remplacement_rules.h"
 
 std::string MarkdownParser::parse(const std::string &md_text) {
     std::string parsed_text;
-    md_to_hmtl_simple_remplacement(md_text);
+
+    // first we parse the simple rules
+    parsed_text = md_to_hmtl_simple_remplacement(md_text);
+
+    // then we tokenize and parse for complex rules
+    parsed_text = parseLists(parsed_text);
+
 
     return parsed_text;
 }
@@ -112,6 +118,7 @@ std::string MarkdownParser::parseImages(const std::string &md_text) {
     return parseItem(md_text, reg, regex_rules.images.second);
 }
 
+
 /**
  * @brief Parse the markdown text with the regex and replace it with the replacement
  *
@@ -122,4 +129,36 @@ std::string MarkdownParser::parseImages(const std::string &md_text) {
  */
 std::string MarkdownParser::parseItem(const std::string&md_text, const std::regex& reg, const std::string& replacement) {
     return std::regex_replace(md_text, reg, replacement);
+}
+
+
+std::string MarkdownParser::parseLists(const std::string&md_text) {
+    parseTypedLists(md_text, token_rules.unordered_list);
+    parseTypedLists(md_text, token_rules.ordered_list);
+    parseTypedLists(md_text, token_rules.checklist);
+
+    return "";
+}
+
+std::string MarkdownParser::parseTypedLists(const std::string& md_text, const std::pair<const char *, TokenType>& token_rule) {
+    tokens.clear();
+    std::regex reg(token_rule.first, std::regex_constants::multiline);
+
+    std::sregex_iterator next(md_text.begin(),md_text.end(), reg);
+    std::sregex_iterator end;
+
+    int last_index = 0;
+    for (; next != end; next++) {
+        std::smatch match = *next;
+
+        // non matched text
+        if (match.position() > last_index) {
+            std::string nonMatchedText = md_text.substr(last_index, match.position() - last_index);
+            tokens.push_back(Token(nonMatchedText, TokenType::TEXT));
+        }
+        tokens.push_back({match.str(), token_rule.second});
+        std::cout << "Matched: " << match.str() << std::endl;
+        last_index = match.position() + match.length();
+    }
+
 }

@@ -18,8 +18,7 @@ enum class TokenType {
     STRIKETHROUGH,
     UNORDERED_LIST,
     ORDERED_LIST,
-    CHECKLISTCHECKED,
-    CHECKLISTUNCHECKED,
+    CHECKLIST,
     BLOCKQUOTE,
     INLINE_CODE,
     HORIZONTAL_RULE,
@@ -31,6 +30,7 @@ enum class TokenType {
     HIGHLIGHT,
     LINKS,
     IMAGES,
+    TEXT,
 };
 
 #endif //TOKENTYPE_H
