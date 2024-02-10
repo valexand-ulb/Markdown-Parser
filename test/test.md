@@ -30,6 +30,36 @@ And also ***bold-italic*** text.
 - [ ] Task 1
 - [x] Task 2
 
+---
+This is a horizontal rule.
+***
+This is another horizontal rule.
+___
+This is yet another horizontal rule.
+
+
+> This is a blockquote.
+> It can span multiple lines.
+>    > And it can contain **bold** and *italic* text.
+
+> This is a blockquote. 
+
+This is some text with `inline code`.
+
+```python
+import code.py
+
+def function():
+    return "This is a code block."
+```
+
+```javascript
+import code.js
+javascript is not a real language
+```
+
+
+
 ![Alt text](image.jpg)
 
 [Link Text](https://www.example.com)

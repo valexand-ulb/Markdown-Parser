@@ -37,7 +37,17 @@ private:
 
     std::string parseImages(const std::string& md_text);
 
-    // complex markdown parsing : multi line elements with no direct replacement
+    std::string parseBlockquotes(const std::string& md_text);
+
+    std::string parseInlineCode(const std::string& md_text);
+
+    std::string parseCodeBlock(const std::string& md_text);
+
+    std::string parseHorizontalRule(const std::string& md_text);
+
+
+
+    // complex markdown parsing : multi line elements with no direct replacement. Will propably treat nested elements
 
     std::string parseLists(const std::string& md_text);
 

@@ -23,6 +23,13 @@ struct RegexRemplacementRules {
     // links and images rules :
     std::pair<const char *, const char *> links = {R"(\[([^\[]+)\]\(([^\)]+)\))", "<a href=\"$2\">$1</a>"};
     std::pair<const char *, const char *> images = {R"(!\[(.*?)\]\((.*?)\))", "<img src=\"$2\" alt=\"$1\">"};
+
+    // blockquotes rules, inline code and horizontal rule rules :
+    std::pair<const char *, const char *> blockquotes = {"^> (.*)$", "<blockquote>$1</blockquote>"};
+    std::pair<const char *, const char *> inline_code = {"`([^`]+)`", "<code>$1</code>"};
+    std::pair<const char *, const char *> horizontal_rule = {"^\\s*([-*_]){3,}\\s*$", "<hr>"};
+
+    std::pair<const char *, const char *> code_block = {R"(```(\w+)([\s\S]*?)```)", "<pre><code class=\"$1\">$2</code></pre>"};
 };
 
 #endif //REGEX_RULES_H

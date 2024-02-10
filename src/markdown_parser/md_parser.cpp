@@ -31,12 +31,23 @@ std::string MarkdownParser::md_to_hmtl_simple_remplacement(const std::string& md
 
     parsed_text = parseHeaders(parsed_text);
 
+    parsed_text = parseHorizontalRule(parsed_text);
+
     parsed_text = parseBold(parsed_text);
     parsed_text = parseItalic(parsed_text);
     parsed_text = parseStrikethrough(parsed_text);
 
     parsed_text = parseImages(parsed_text);
     parsed_text = parseLinks(parsed_text);
+
+    parsed_text = parseBlockquotes(parsed_text);
+    parsed_text = parseCodeBlock(parsed_text);
+    parsed_text = parseInlineCode(parsed_text);
+
+
+
+
+
 
     return parsed_text;
 }
@@ -70,7 +81,7 @@ std::string MarkdownParser::parseHeaders(const std::string &md_text) {
  * @return std::string : The parsed text with the html equivalent for the bold
  */
 std::string MarkdownParser::parseBold(const std::string &md_text) {
-    std::regex reg(regex_rules.bold.first);
+    const std::regex reg(regex_rules.bold.first);
     return parseItem(md_text, reg, regex_rules.bold.second);
 }
 
@@ -81,7 +92,7 @@ std::string MarkdownParser::parseBold(const std::string &md_text) {
  * @return std::string : The parsed text with the html equivalent for the italic
  */
 std::string MarkdownParser::parseItalic(const std::string &md_text) {
-    std::regex reg(regex_rules.italic.first);
+    const std::regex reg(regex_rules.italic.first);
     return parseItem(md_text, reg, regex_rules.italic.second);
 }
 
@@ -92,7 +103,7 @@ std::string MarkdownParser::parseItalic(const std::string &md_text) {
  * @return std::string : The parsed text with the html equivalent for the strikethrough
  */
 std::string MarkdownParser::parseStrikethrough(const std::string &md_text) {
-    std::regex reg(regex_rules.strikethrough.first);
+    const std::regex reg(regex_rules.strikethrough.first);
     return parseItem(md_text, reg, regex_rules.strikethrough.second);
 }
 
@@ -103,7 +114,7 @@ std::string MarkdownParser::parseStrikethrough(const std::string &md_text) {
  * @return std::string : The parsed text with the html equivalent for the links
  */
 std::string MarkdownParser::parseLinks(const std::string &md_text) {
-    std::regex reg(regex_rules.links.first);
+    const std::regex reg(regex_rules.links.first);
     return parseItem(md_text, reg, regex_rules.links.second);
 }
 
@@ -114,10 +125,53 @@ std::string MarkdownParser::parseLinks(const std::string &md_text) {
  * @return std::string : The parsed text with the html equivalent for the images
  */
 std::string MarkdownParser::parseImages(const std::string &md_text) {
-    std::regex reg(regex_rules.images.first);
+    const std::regex reg(regex_rules.images.first);
     return parseItem(md_text, reg, regex_rules.images.second);
 }
 
+/**
+ * @brief Parse the blockquotes of the markdown text
+ *
+ * @param md_text : The markdown text to parse
+ * @return std::string : The parsed text with the html equivalent for the blockquotes
+ */
+std::string MarkdownParser::parseBlockquotes(const std::string &md_text) {
+    const std::regex reg(regex_rules.blockquotes.first, std::regex_constants::multiline);
+    return parseItem(md_text, reg, regex_rules.blockquotes.second);
+}
+
+/**
+ * @brief Parse the code block of the markdown text
+ *
+ * @param md_text : The markdown text to parse
+ * @return std::string : The parsed text with the html equivalent for the code block
+ */
+std::string MarkdownParser::parseCodeBlock(const std::string&md_text) {
+    const std::regex reg(regex_rules.code_block.first, std::regex_constants::multiline);
+    return parseItem(md_text, reg, regex_rules.code_block.second);
+}
+
+/**
+ * @brief Parse the inline code of the markdown text
+ *
+ * @param md_text : The markdown text to parse
+ * @return std::string : The parsed text with the html equivalent for the inline code
+ */
+std::string MarkdownParser::parseInlineCode(const std::string &md_text) {
+    const std::regex reg(regex_rules.inline_code.first);
+    return parseItem(md_text, reg, regex_rules.inline_code.second);
+}
+
+/**
+ * @brief Parse the horizontal rule of the markdown text
+ *
+ * @param md_text : The markdown text to parse
+ * @return std::string : The parsed text with the html equivalent for the horizontal rule
+ */
+std::string MarkdownParser::parseHorizontalRule(const std::string& md_text) {
+    const std::regex reg(regex_rules.horizontal_rule.first, std::regex_constants::multiline);
+    return parseItem(md_text, reg, regex_rules.horizontal_rule.second);
+}
 
 /**
  * @brief Parse the markdown text with the regex and replace it with the replacement
@@ -130,7 +184,6 @@ std::string MarkdownParser::parseImages(const std::string &md_text) {
 std::string MarkdownParser::parseItem(const std::string&md_text, const std::regex& reg, const std::string& replacement) {
     return std::regex_replace(md_text, reg, replacement);
 }
-
 
 std::string MarkdownParser::parseLists(const std::string&md_text) {
     std::string parsed_text = md_text;
@@ -156,7 +209,7 @@ void MarkdownParser::parseTypedLists(const std::string& md_text, const std::pair
     std::sregex_iterator end;
 
     int last_index = 0;
-    for (; next != end; next++) {
+    for (; next != end; ++next) {
         std::smatch match = *next;
 
         // non matched text
