@@ -12,6 +12,7 @@ struct RegexTokenRules{
     std::pair<const char *, TokenType> unordered_list= {R"((^\s*\*\s+.+\n?)+)", TokenType::UNORDERED_LIST};
     std::pair<const char *, TokenType> ordered_list= {R"((^\s*\d+\.\s+.+\n?)+)", TokenType::ORDERED_LIST};
     std::pair<const char *, TokenType> checklist= {R"((^\s*-\s+\[[ x]\]\s+.+$\s*)+)", TokenType::CHECKLIST};
+    std::pair<const char *, TokenType> table = {R"(\|(.+?)\|(.+?)\|\n((\|.+?\|\n)+))", TokenType::TABLE};
 };
 
 #endif //REGEX_TOKEN_RULES_H

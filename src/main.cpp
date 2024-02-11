@@ -4,6 +4,7 @@
 
 #include "markdown_parser/md_parser.h"
 
+#include <chrono>
 
 
 int main()
@@ -31,7 +32,8 @@ int main()
     inputFile.close();
 
     MarkdownParser md_parser;
+    std::string content = md_parser.parse(markdownContent);
+    outputFile << content;
 
-    outputFile << md_parser.parse(markdownContent);
     return 0;
 }

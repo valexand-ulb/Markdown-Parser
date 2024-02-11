@@ -15,6 +15,7 @@ std::string MarkdownParser::parse(const std::string &md_text) {
 
     // then we tokenize and parse for complex rules
     parsed_text = parseLists(parsed_text);
+    parseTable(parsed_text);
 
 
     return parsed_text;
@@ -27,9 +28,8 @@ std::string MarkdownParser::parse(const std::string &md_text) {
  * @return std::string : The parsed text with the html equivalent
  */
 std::string MarkdownParser::md_to_hmtl_simple_remplacement(const std::string& md_text) {
-    std::string parsed_text = md_text;
-
-    parsed_text = parseHeaders(parsed_text);
+    std::string parsed_text;
+    parsed_text = parseHeaders(md_text);
 
     parsed_text = parseHorizontalRule(parsed_text);
 
@@ -43,11 +43,6 @@ std::string MarkdownParser::md_to_hmtl_simple_remplacement(const std::string& md
     parsed_text = parseBlockquotes(parsed_text);
     parsed_text = parseCodeBlock(parsed_text);
     parsed_text = parseInlineCode(parsed_text);
-
-
-
-
-
 
     return parsed_text;
 }
@@ -225,6 +220,30 @@ void MarkdownParser::parseTypedLists(const std::string& md_text, const std::pair
         tokens.push_back(Token(nonMatchedText, TokenType::TEXT));
     }
 
+}
+
+void MarkdownParser::parseTable(const std::string&md_text) {
+    const std::regex reg(token_rules.table.first, std::regex_constants::multiline);
+
+    std::sregex_iterator next(md_text.begin(),md_text.end(), reg);
+    std::sregex_iterator end;
+
+    int last_index = 0;
+    for (; next != end; ++next) {
+        std::smatch match = *next;
+
+        // non matched text
+        if (match.position() > last_index) {
+            const std::string nonMatchedText = md_text.substr(last_index, match.position() - last_index);
+            tokens.push_back(Token(nonMatchedText, TokenType::TEXT));
+        }
+        tokens.push_back({match.str(), TokenType::TABLE});
+        last_index = match.position() + match.length();
+    }
+    if (last_index < md_text.length()) {
+        const std::string nonMatchedText = md_text.substr(last_index, md_text.length() - last_index);
+        tokens.push_back(Token(nonMatchedText, TokenType::TEXT));
+    }
 }
 
 std::string MarkdownParser::ListTokenToHtml() {

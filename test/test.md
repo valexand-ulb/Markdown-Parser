@@ -58,7 +58,11 @@ import code.js
 javascript is not a real language
 ```
 
-
+| col1   |   col2   |  col3 |
+|:-------|:--------:|------:|
+| Table  |  Header  |   Row |
+| Table  |  Header  |   Row |
+| Table  |  Header  |   Row |
 
 ![Alt text](image.jpg)
 
