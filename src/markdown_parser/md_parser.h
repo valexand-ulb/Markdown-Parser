@@ -16,6 +16,8 @@
 class MarkdownParser {
 
 public:
+    void parseAllTable(const std::string& md_text, std::string& parsed_text);
+
     std::string parse(const std::string &md_text);
 
 private:
@@ -67,6 +69,8 @@ private:
     std::string md_ordered_list_to_html(const std::string& md_text);
 
     std::string md_checklist_to_html(const std::string& md_text);
+
+    std::string md_table_to_html(const std::string& md_text);
 
 };
 
