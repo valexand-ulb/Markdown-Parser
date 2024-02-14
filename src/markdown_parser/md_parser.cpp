@@ -5,6 +5,7 @@
 #include "md_parser.h"
 
 #include <iostream>
+#include <iomanip>
 
 #include "token/Token.h"
 #include "regex_rules/regex_remplacement_rules.h"
@@ -19,7 +20,7 @@ std::string MarkdownParser::parse(const std::string &md_text) {
     // then we tokenize and parse for complex rules
     parsed_text = parseLists(parsed_text);
 
-    //parseAllTable(md_text, parsed_text);
+    parsed_text = parseAllTable(parsed_text);
 
     return parsed_text;
 }
@@ -248,30 +249,6 @@ void MarkdownParser::parseTypedLists(const std::string& md_text, const std::pair
 
 }
 
-void MarkdownParser::parseTable(const std::string&md_text) {
-    const std::regex reg(token_rules.table.first, std::regex_constants::multiline);
-
-    std::sregex_iterator next(md_text.begin(),md_text.end(), reg);
-    std::sregex_iterator end;
-
-    int last_index = 0;
-    for (; next != end; ++next) {
-        std::smatch match = *next;
-
-        // non matched text
-        if (match.position() > last_index) {
-            const std::string nonMatchedText = md_text.substr(last_index, match.position() - last_index);
-            tokens.push_back(Token{nonMatchedText, TokenType::TEXT});
-        }
-        tokens.push_back({match.str(), TokenType::TABLE});
-        last_index = match.position() + match.length();
-    }
-    if (last_index < md_text.length()) {
-        const std::string nonMatchedText = md_text.substr(last_index, md_text.length() - last_index);
-        tokens.push_back(Token{nonMatchedText, TokenType::TEXT});
-    }
-}
-
 std::string MarkdownParser::ListTokenToHtml() {
     std::string final_string;
     for (auto &token : tokens) {
@@ -339,20 +316,80 @@ std::string MarkdownParser::md_checklist_to_html(const std::string&md_text) {
     return final_string;
 }
 
-void MarkdownParser::parseAllTable(const std::string& md_text, std::string& parsed_text) {
+std::string MarkdownParser::parseAllTable(const std::string& md_text) {
     std::cout << "Parsing table..." << std::endl;
-    parseTable(parsed_text);
-    //parsed_text = md_table_to_html(md_text);
+    parseTable(md_text);
+    std::string parsed_text;
+
+    for (Token token: tokens) {
+        if (token.type == TokenType::TABLE) {
+            parsed_text += md_table_to_html(token.value);
+        }
+        else {
+            parsed_text += token.value;
+        }
+    }
     tokens.clear();
+    return parsed_text;
+}
+
+void MarkdownParser::parseTable(const std::string&md_text) {
+    const std::regex reg(token_rules.table.first, std::regex_constants::multiline);
+
+    std::sregex_iterator next(md_text.begin(),md_text.end(), reg);
+    std::sregex_iterator end;
+
+    int last_index = 0;
+    for (; next != end; ++next) {
+        std::smatch match = *next;
+
+        // non matched text
+        if (match.position() > last_index) {
+            const std::string nonMatchedText = md_text.substr(last_index, match.position() - last_index);
+            tokens.push_back(Token{nonMatchedText, TokenType::TEXT});
+        }
+        tokens.push_back({match.str(), TokenType::TABLE});
+        last_index = match.position() + match.length();
+    }
+    if (last_index < md_text.length()) {
+        const std::string nonMatchedText = md_text.substr(last_index, md_text.length() - last_index);
+        tokens.push_back(Token{nonMatchedText, TokenType::TEXT});
+    }
 }
 
 std::string MarkdownParser::md_table_to_html(const std::string& md_text) {
     std::string final_string = "<table>\n";
+    std::vector<std::vector<std::string>> rows;
 
-    std::regex pattern("\\|([^|]*)");
-    std::sregex_token_iterator begin(md_text.begin(), md_text.end(), pattern, 1);
-    std::sregex_token_iterator end;
+    // Define regex patterns
+    std::regex rowRegex("\\|(.+?)\\|");
+    std::regex cellRegex("\\s*([^|]+)\\s*");
 
+    std::istringstream markdownStream(md_text);
+    std::string line;
+
+    while (std::getline(markdownStream, line)) {
+        std::vector<std::string> cells;
+        auto cellBegin = std::sregex_iterator(line.begin(), line.end(), cellRegex);
+        auto cellEnd = std::sregex_iterator();
+
+        for (auto it = cellBegin; it != cellEnd; ++it) {
+            cells.push_back((*it)[1]);
+        }
+
+        if (!cells.empty()) {
+            rows.push_back(cells);
+        }
+    }
+
+    for (const auto& row : rows) {
+        final_string += "\t<tr>\n";
+        for (const auto& cell : row) {
+            final_string += "\t\t<td>" + cell + "</td>\n";
+        }
+        final_string += "\t</tr>\n";
+    }
+    final_string += "</table>\n";
     return final_string;
 }
 

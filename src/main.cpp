@@ -33,8 +33,8 @@ int main()
     inputFile.close();
 
     MarkdownParser md_parser;
-    std::string content = md_parser.parse(markdownContent);
-    //std::string content = benchmark.execute_parsing_function(md_parser);
+    //std::string content = md_parser.parse(markdownContent);
+    std::string content = benchmark.execute_parsing_function(md_parser);
     outputFile << HtmlUtils::get_html_head();
     outputFile << content;
     outputFile << HtmlUtils::get_html_tail();

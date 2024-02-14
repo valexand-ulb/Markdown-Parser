@@ -16,7 +16,6 @@
 class MarkdownParser {
 
 public:
-    void parseAllTable(const std::string& md_text, std::string& parsed_text);
 
     std::string parse(const std::string &md_text);
 
@@ -52,6 +51,8 @@ private:
     std::string parseLists(const std::string& md_text);
 
     void parseTypedLists(const std::string& md_text, const std::pair<const char *, TokenType>& token_rule);
+
+    std::string parseAllTable(const std::string& md_text);
 
     void parseTable(const std::string& md_text);
 

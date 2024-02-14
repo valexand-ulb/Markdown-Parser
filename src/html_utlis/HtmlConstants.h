@@ -14,6 +14,6 @@ const std::string HTML_HEAD = "<!DOCTYPE html>\n"
                         "</head>\n"
                         "<body>\n";
 
-const std::string HTML_TAIL = "</body>\n</html>\n";
+const std::string HTML_TAIL = "\n</body>\n</html>\n";
 
 #endif //HTMLCONSTANTS_H
