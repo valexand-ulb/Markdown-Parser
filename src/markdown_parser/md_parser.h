@@ -48,6 +48,10 @@ private:
 
     std::string parseHorizontalRule(const std::string& md_text);
 
+    std::string parseLineBreak(const std::string& md_text);
+
+    std::string parseParagraph(const std::string& md_text);
+
     // complex markdown parsing : multi line elements with no direct replacement. Will propably treat nested elements
 
     std::string parseLists(const std::string& md_text);

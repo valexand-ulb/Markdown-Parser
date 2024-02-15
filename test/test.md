@@ -4,13 +4,11 @@
 #### Header 4
 ##### Header 5
 ###### Header 6
+This is a paragraph with some **bold** and *italic* text.  
+There is also some ~~strikethrough~~ text.  
+And also ***bold-italic*** text.  
 
-This is a paragraph with some **bold** and *italic* text.
- 
-There is also some ~~strikethrough~~ text.
-
-And also ***bold-italic*** text.
-
+This is another paragraph with some `inline code`. But more for testing purposes.
 * Unordered List Item 1
 * Unordered List Item 2
 * Unordered List Item 3
@@ -41,8 +39,6 @@ This is yet another horizontal rule.
 > This is a blockquote.
 > It can span multiple lines.
 >    > And it can contain **bold** and *italic* text.
-
-> This is a blockquote. 
 
 This is some text with `inline code`.
 

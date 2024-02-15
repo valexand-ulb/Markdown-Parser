@@ -41,6 +41,9 @@ std::string MarkdownParser::md_to_hmtl_simple_remplacement(const std::string& md
     parsed_text = parseCodeBlock(parsed_text);
     parsed_text = parseInlineCode(parsed_text);
 
+    parsed_text = parseParagraph(parsed_text);
+    parsed_text = parseLineBreak(parsed_text);
+
     return parsed_text;
 }
 
@@ -173,6 +176,30 @@ std::string MarkdownParser::parseHorizontalRule(const std::string& md_text) {
     std::cout << "Parsing horizontal rule..." << std::endl;
     const std::regex reg(regex_rules.horizontal_rule.first, std::regex_constants::multiline);
     return parseItem(md_text, reg, regex_rules.horizontal_rule.second);
+}
+
+/**
+ * @brief Parse the line break of the markdown text
+ *
+ * @param md_text : The markdown text to parse
+ * @return std::string : The parsed text with the html equivalent for the line break
+ */
+std::string MarkdownParser::parseLineBreak(const std::string& md_text) {
+    std::cout << "Parsing line break..." << std::endl;
+    const std::regex reg(regex_rules.line_break.first, std::regex_constants::multiline);
+    return parseItem(md_text, reg, regex_rules.line_break.second);
+}
+
+/**
+ * @brief Parse the paragraph of the markdown text
+ *
+ * @param md_text : The markdown text to parse
+ * @return std::string : The parsed text with the html equivalent for the paragraph
+ */
+std::string MarkdownParser::parseParagraph(const std::string& md_text) {
+    std::cout << "Parsing paragraph..." << std::endl;
+    const std::regex reg(regex_rules.paragraph.first, std::regex_constants::multiline);
+    return parseItem(md_text, reg, regex_rules.paragraph.second);
 }
 
 /**
