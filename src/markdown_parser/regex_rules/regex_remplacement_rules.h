@@ -4,7 +4,6 @@
 
 #ifndef REGEX_RULES_H
 #define REGEX_RULES_H
-#include "../token/TokenType.h"
 
 struct RegexRemplacementRules {
     //  headers rules :

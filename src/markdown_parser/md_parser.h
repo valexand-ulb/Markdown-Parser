@@ -7,10 +7,12 @@
 
 #include <regex>
 #include <vector>
+#include <iostream>
+#include <iomanip>
 
+#include "token/Token.h"
 #include "regex_rules/regex_remplacement_rules.h"
 #include "regex_rules/regex_token_rules.h"
-#include "token/Token.h"
 
 
 class MarkdownParser {

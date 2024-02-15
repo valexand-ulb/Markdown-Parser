@@ -4,13 +4,6 @@
 
 #include "md_parser.h"
 
-#include <iostream>
-#include <iomanip>
-
-#include "token/Token.h"
-#include "regex_rules/regex_remplacement_rules.h"
-
-
 std::string MarkdownParser::parse(const std::string &md_text) {
     std::string parsed_text;
 

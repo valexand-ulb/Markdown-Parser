@@ -4,9 +4,6 @@
 
 #include "Benchmark.h"
 
-#include "md_parser.h"
-
-
 void Benchmark::start() {
     start_time = std::chrono::high_resolution_clock::now();
 }

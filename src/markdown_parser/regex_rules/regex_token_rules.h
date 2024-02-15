@@ -6,6 +6,7 @@
 #define REGEX_TOKEN_RULES_H
 
 #include <utility>
+
 #include "../token/TokenType.h"
 
 struct RegexTokenRules{
