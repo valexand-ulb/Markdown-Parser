@@ -61,6 +61,21 @@ std::string MarkdownParser::line_by_line_parsing(const std::string& md_text) {
 }
 
 
+std::string MarkdownParser::parseTextElements(const std::string& md_text_line) {
+    // text modification
+    std::regex_replace(md_text_line, std::regex(regex_rules.bold.first), regex_rules.bold.second);
+    std::regex_replace(md_text_line, std::regex(regex_rules.italic.first), regex_rules.italic.second);
+    std::regex_replace(md_text_line, std::regex(regex_rules.strikethrough.first), regex_rules.strikethrough.second);
+
+    // links and images
+    std::regex_replace(md_text_line, std::regex(regex_rules.links.first), regex_rules.links.second);
+    std::regex_replace(md_text_line, std::regex(regex_rules.images.first), regex_rules.images.second);
+
+    // inline code
+    std::regex_replace(md_text_line, std::regex(regex_rules.inline_code.first), regex_rules.inline_code.second);
+}
+
+
 /**
  * @brief Parse the markdown text and replace it in the go with the html equivalent for the simple rules
  *
