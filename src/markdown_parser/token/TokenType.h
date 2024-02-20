@@ -6,6 +6,7 @@
 #define TOKENTYPE_H
 
 enum class TokenType {
+    HEADERS,
     HEADER1,
     HEADER2,
     HEADER3,

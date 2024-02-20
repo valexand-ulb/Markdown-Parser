@@ -6,7 +6,8 @@
 
 std::string MarkdownParser::parse(const std::string &md_text) {
     std::string parsed_text;
-
+    parsed_text = line_by_line_parsing(md_text);
+    /*
     // first we parse the simple rules
     parsed_text = md_to_hmtl_simple_remplacement(md_text);
 
@@ -14,9 +15,51 @@ std::string MarkdownParser::parse(const std::string &md_text) {
     parsed_text = parseLists(parsed_text);
 
     parsed_text = parseAllTable(parsed_text);
-
+    */
     return parsed_text;
 }
+
+std::string MarkdownParser::line_by_line_parsing(const std::string& md_text) {
+
+    std::istringstream md_text_stream(md_text);
+    //std::ostream output_stream(std::cout.rdbuf());
+    std::string line;
+
+    while (std::getline(md_text_stream, line)) {
+        if (std::regex_search(line, std::regex(rules.HEADERS.first))) { // header mode
+            std::cout << "Parsing headers..." << std::endl;
+            std::cout << "\t- header : " << line << std::endl;
+        }
+        else if (std::regex_search(line, std::regex(rules.BLOCKQUOTES.first))) {   // blockquote mode
+            std::cout << "Parsing blockquotes..." << std::endl;
+            std::cout << "\t- blockquote : " << line << std::endl;
+        }
+        else if (std::regex_search(line, std::regex(rules.CHECKLIST.first))) { // checklist mode
+            std::cout << "Parsing checklist..." << std::endl;
+            std::cout << "\t- checklist : " << line << std::endl;
+        }
+        else if (std::regex_search(line, std::regex(rules.ORDERED_LIST.first))) { // ordered list mode
+            std::cout << "Parsing ordered list..." << std::endl;
+            std::cout << "\t- ordered list : " << line << std::endl;
+        }
+        else if (std::regex_search(line, std::regex(rules.UNORDERED_LIST.first))) { // unordered list mode
+            std::cout << "Parsing unordered list..." << std::endl;
+            std::cout << "\t- unordered list : " << line << std::endl;
+        }
+        else if (std::regex_search(line, std::regex(rules.TABLE.first))) { // table mode
+            std::cout << "Parsing table..." << std::endl;
+            std::cout << "\t- table : " << line << std::endl;
+        }
+        else if (std::regex_search(line, std::regex(rules.CODEBLOCK.first))) { // codeblock mode
+            std::cout << "Parsing code block..." << std::endl;
+            std::cout << "\t- code block : " << line << std::endl;
+        }
+
+    }
+
+    return "";
+}
+
 
 /**
  * @brief Parse the markdown text and replace it in the go with the html equivalent for the simple rules

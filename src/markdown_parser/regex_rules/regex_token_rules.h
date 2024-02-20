@@ -10,6 +10,7 @@
 #include "../token/TokenType.h"
 
 struct RegexTokenRules{
+    std::pair<const char *, TokenType> headers = {"^#{1,6}", TokenType::HEADERS};
     std::pair<const char *, TokenType> unordered_list= {R"((^\s*\*\s+.+\n?)+)", TokenType::UNORDERED_LIST};
     std::pair<const char *, TokenType> ordered_list= {R"((^\s*\d+\.\s+.+\n?)+)", TokenType::ORDERED_LIST};
     std::pair<const char *, TokenType> checklist= {R"((^\s*-\s+\[[ x]\]\s+.+$\s*)+)", TokenType::CHECKLIST};
