@@ -67,7 +67,7 @@ private:
 
     std::string ListTokenToHtml();
 
-    std::string parsetext
+    std::string parseTextElements(const std::string& md_text);
 
     // generic parsing
 
