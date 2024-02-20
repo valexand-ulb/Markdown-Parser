@@ -54,12 +54,12 @@ import code.js
 javascript is not a real language
 ```
 
-| col1   |   col2   |  col3 |
-|:-------|:--------:|------:|
-| Table  |  Header  |   Row |
-| Table  |  Header  |   Row |
-| Table  |  Header  |   Row |
+| col1  |    col2 |  col3 |
+|-------|--------|------|
+| Table |  Header |   Row |
+| Table |  Header |   Row |
+| Table |  Header |   Row |
 
-![Alt text](image.jpg)
+![Alt text](https://i.imgur.com/8nLFCVP.png)
 
 [Link Text](https://www.example.com)

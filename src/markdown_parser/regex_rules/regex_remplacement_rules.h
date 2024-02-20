@@ -32,7 +32,7 @@ struct RegexRemplacementRules {
     std::pair<const char *, const char *> code_block = {R"(```(\w+)([\s\S]*?)```)", "<pre><code class=\"$1\">$2</code></pre>"};
 
     // Line break and paragraph rules :
-    std::pair<const char *, const char *> line_break = {"([^<>]+)\n", "$1<br>\n"};
+    std::pair<const char *, const char *> line_break = {"([^<>\r\n]+)(?!\\s*<\\w+>)\r?\n", "$1<br>\n"};
     std::pair<const char *, const char *> paragraph = {"([^<>]+)\n\n", "$1<br><br>\n"};
 };
 

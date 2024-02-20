@@ -27,9 +27,6 @@ std::string MarkdownParser::parse(const std::string &md_text) {
 std::string MarkdownParser::md_to_hmtl_simple_remplacement(const std::string& md_text) {
     std::string parsed_text;
 
-    parsed_text = parseParagraph(parsed_text);
-    parsed_text = parseLineBreak(parsed_text);
-
     parsed_text = parseHeaders(md_text);
 
     parsed_text = parseHorizontalRule(parsed_text);
@@ -44,6 +41,8 @@ std::string MarkdownParser::md_to_hmtl_simple_remplacement(const std::string& md
     parsed_text = parseBlockquotes(parsed_text);
     parsed_text = parseCodeBlock(parsed_text);
     parsed_text = parseInlineCode(parsed_text);
+
+    parsed_text = parseLineBreak(parsed_text);
 
     return parsed_text;
 }

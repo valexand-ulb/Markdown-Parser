@@ -9,8 +9,9 @@
 const std::string HTML_HEAD = "<!DOCTYPE html>\n"
                         "<html>\n"
                         "<head>\n"
-                        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
-                        "<title>Markdown Parser Benchmark</title>\n"
+                        "\t<link rel=\"stylesheet\" href=\"../../styles/retro.css\">"
+                        "\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
+                        "\t<title>Markdown Parser Benchmark</title>\n"
                         "</head>\n"
                         "<body>\n";
 
