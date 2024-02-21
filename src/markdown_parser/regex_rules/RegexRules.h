@@ -16,7 +16,8 @@ struct RegexRules {
     const std::pair<const char *, TokenType> UNORDERED_LIST = {R"(^[-\*\+]\s)", TokenType::UNORDERED_LIST};
     const std::pair<const char *, TokenType> TABLE = {R"(\|)", TokenType::TABLE};
     const std::pair<const char *, TokenType> HORIZONTAL_RULE = {R"(^(-{3,}|\*{3,}|_{3,}))", TokenType::HORIZONTAL_RULE};
-    const std::pair<const char *, TokenType> CODEBLOCK = {R"(^(```.*$|^```.+\n))", TokenType::INLINE_CODE};
+    const std::pair<const char *, TokenType> CODEBLOCK = {"^```[a-zA-Z0-9]*.*", TokenType::INLINE_CODE};
+    const std::pair<const char *, TokenType> TEXT = {"^.*\\S.*$", TokenType::TEXT};
 };
 
 #endif //REGEXRULES_H

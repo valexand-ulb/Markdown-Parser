@@ -30,6 +30,9 @@ private:
     RegexTokenRules token_rules;
     std::vector<Token> tokens;
 
+    std::string parseHeadersLine(const std::string& md_line_text);
+
+    std::string parseBlockquotesLine(const std::string& md_line_text);
     // base markdown parsing : one line elements with direct replacement
     std::string parseHeaders(const std::string& md_text);
 
@@ -67,7 +70,7 @@ private:
 
     std::string ListTokenToHtml();
 
-    std::string parseTextElements(const std::string& md_text);
+    std::string parseTextElements(std::string& md_text_line);
 
     // generic parsing
 

@@ -29,6 +29,8 @@ class Benchmark {
 public:
 
     std::string execute_parsing_function(MarkdownParser parser);
+
+    std::string execute_line_parsing_function(MarkdownParser parser);
 };
 
 

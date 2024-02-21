@@ -22,59 +22,134 @@ std::string MarkdownParser::parse(const std::string &md_text) {
 std::string MarkdownParser::line_by_line_parsing(const std::string& md_text) {
 
     std::istringstream md_text_stream(md_text);
-    //std::ostream output_stream(std::cout.rdbuf());
+    std::stringstream output_stream;
     std::string line;
 
     while (std::getline(md_text_stream, line)) {
         if (std::regex_search(line, std::regex(rules.HEADERS.first))) { // header mode
             std::cout << "Parsing headers..." << std::endl;
-            std::cout << "\t- header : " << line << std::endl;
+            output_stream << parseHeadersLine(parseTextElements(line)) << std::endl;
+        }
+        else if (std::regex_search(line, std::regex(rules.HORIZONTAL_RULE.first))) { // horizontal rule mode
+            std::cout << "Parsing horizontal rule..." << std::endl;
+            output_stream << "<hr>" << std::endl;
         }
         else if (std::regex_search(line, std::regex(rules.BLOCKQUOTES.first))) {   // blockquote mode
             std::cout << "Parsing blockquotes..." << std::endl;
-            std::cout << "\t- blockquote : " << line << std::endl;
+            std::string terminaison_line = line;
+            std::string blockquote_text = "<blockquote>\n";
+            do {
+                terminaison_line = terminaison_line.substr(2);
+                blockquote_text += parseTextElements(terminaison_line) + "\n";
+            } while(std::getline(md_text_stream,terminaison_line) && !terminaison_line.empty());
+            blockquote_text += "</blockquote>\n";
+            output_stream << blockquote_text << std::endl;
         }
         else if (std::regex_search(line, std::regex(rules.CHECKLIST.first))) { // checklist mode
             std::cout << "Parsing checklist..." << std::endl;
-            std::cout << "\t- checklist : " << line << std::endl;
+            std::string terminaison_line = line;
+            std::string checklist_text = "<ul>\n";
+            do {
+                terminaison_line = terminaison_line.substr(2);
+                if (terminaison_line[1] == 'x' || terminaison_line[1] == 'X') {
+                    terminaison_line = terminaison_line.substr(3);
+                    checklist_text += "<li><input type=\"checkbox\" checked>" + parseTextElements(terminaison_line) + "</li>\n";
+                }
+                else {
+                    terminaison_line = terminaison_line.substr(3);
+                    checklist_text += "<li><input type=\"checkbox\">" + parseTextElements(terminaison_line) + "</li>\n";
+                }
+            } while(std::getline(md_text_stream,terminaison_line) && !terminaison_line.empty());
+            checklist_text += "</ul>\n";
+            output_stream << checklist_text << std::endl;
         }
         else if (std::regex_search(line, std::regex(rules.ORDERED_LIST.first))) { // ordered list mode
             std::cout << "Parsing ordered list..." << std::endl;
-            std::cout << "\t- ordered list : " << line << std::endl;
+            std::string terminaison_line = line;
+            std::string ordered_list_text = "<ol>\n";
+            do {
+                terminaison_line = terminaison_line.substr(3);
+                ordered_list_text += "<li>" + parseTextElements(terminaison_line) + "</li>\n";
+            } while(std::getline(md_text_stream,terminaison_line) && !terminaison_line.empty());
+            ordered_list_text += "</ol>\n";
+            output_stream << ordered_list_text << std::endl;
         }
         else if (std::regex_search(line, std::regex(rules.UNORDERED_LIST.first))) { // unordered list mode
             std::cout << "Parsing unordered list..." << std::endl;
-            std::cout << "\t- unordered list : " << line << std::endl;
+            std::string terminaison_line = line;
+            std::string unordered_list_text = "<ul>\n";
+            do {
+                terminaison_line = terminaison_line.substr(2);
+                unordered_list_text += "<li>" + parseTextElements(terminaison_line) + "</li>\n";
+            } while(std::getline(md_text_stream,terminaison_line) && !terminaison_line.empty());
+            unordered_list_text += "</ul>\n";
+            output_stream << unordered_list_text << std::endl;
         }
         else if (std::regex_search(line, std::regex(rules.TABLE.first))) { // table mode
             std::cout << "Parsing table..." << std::endl;
-            std::cout << "\t- table : " << line << std::endl;
+            output_stream << line << std::endl;
         }
         else if (std::regex_search(line, std::regex(rules.CODEBLOCK.first))) { // codeblock mode
             std::cout << "Parsing code block..." << std::endl;
-            std::cout << "\t- code block : " << line << std::endl;
+            std::string terminaison_line = line.substr(3);
+            std::string codeblock_text;
+            if (terminaison_line[0] == ' ') {
+                codeblock_text = "<pre><code>\n";
+            }
+            else {
+                codeblock_text = "<pre><code>" + terminaison_line + "\n";
+            }
+            while(std::getline(md_text_stream,terminaison_line) && terminaison_line != "```"){
+                codeblock_text += terminaison_line + "\n";
+            }
+            codeblock_text += "</code></pre>\n";
+            output_stream << codeblock_text << std::endl;
+        }
+        else if (std::regex_search(line, std::regex(rules.TEXT.first))){ // paragraph mode
+            std::cout << "Parsing paragraph..." << std::endl;
+            std::string terminaison_line = line;
+            std::string paragraph_text = "<p>";
+            do {
+                paragraph_text += parseTextElements(terminaison_line) + '\n';
+            } while(std::getline(md_text_stream,terminaison_line) && !terminaison_line.empty());
+            paragraph_text += "</p>\n";
+            output_stream << paragraph_text << std::endl;
         }
 
     }
 
-    return "";
+    return output_stream.str();
 }
 
 
-std::string MarkdownParser::parseTextElements(const std::string& md_text_line) {
+std::string MarkdownParser::parseTextElements(std::string& md_text_line) {
     // text modification
-    std::regex_replace(md_text_line, std::regex(regex_rules.bold.first), regex_rules.bold.second);
-    std::regex_replace(md_text_line, std::regex(regex_rules.italic.first), regex_rules.italic.second);
-    std::regex_replace(md_text_line, std::regex(regex_rules.strikethrough.first), regex_rules.strikethrough.second);
+    md_text_line = std::regex_replace(md_text_line, std::regex(regex_rules.bold.first), regex_rules.bold.second);
+    md_text_line = std::regex_replace(md_text_line, std::regex(regex_rules.italic.first), regex_rules.italic.second);
+    md_text_line = std::regex_replace(md_text_line, std::regex(regex_rules.strikethrough.first), regex_rules.strikethrough.second);
 
     // links and images
-    std::regex_replace(md_text_line, std::regex(regex_rules.links.first), regex_rules.links.second);
-    std::regex_replace(md_text_line, std::regex(regex_rules.images.first), regex_rules.images.second);
+    md_text_line = std::regex_replace(md_text_line, std::regex(regex_rules.images.first), regex_rules.images.second);
+    md_text_line = std::regex_replace(md_text_line, std::regex(regex_rules.links.first), regex_rules.links.second);
 
     // inline code
-    std::regex_replace(md_text_line, std::regex(regex_rules.inline_code.first), regex_rules.inline_code.second);
+    md_text_line = std::regex_replace(md_text_line, std::regex(regex_rules.inline_code.first), regex_rules.inline_code.second);
+    return md_text_line;
 }
 
+std::string MarkdownParser::parseHeadersLine(const std::string& md_line_text) {
+    unsigned short int header_level = 0;
+    while (md_line_text[header_level] != ' ' && md_line_text[header_level] == '#'){
+        header_level++;
+    }
+    std::string header_tag = "<h" + std::to_string(header_level) + ">";
+    return header_tag + md_line_text.substr(header_level+1) + "</h" + std::to_string(header_level) + ">";
+}
+
+
+std::string MarkdownParser::parseBlockquotesLine(const std::string& md_line_text) {
+    return "<blockquote>" + md_line_text.substr(2) + "</blockquote>";
+}
 
 /**
  * @brief Parse the markdown text and replace it in the go with the html equivalent for the simple rules
