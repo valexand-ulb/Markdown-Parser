@@ -1602,10 +1602,10 @@ Une adresse IPv6 est représentée par 128 bits de la formes `x:x:x:x:x:x:x:x` o
 Les suites de 0 dans les champs sont optionnels : `2001:0:130F:0:0:09C0:876A:130B`
 Enfin les suite successive de 0 unique peuvent être représenté par `::` mais seulement une seule fois au sein de l'adresse :`2001:0:130F::::09C0:876A:130B`
  
- #### Hiérarchie dans les adresse IPv6
+#### Hiérarchie dans les adresse IPv6
  Une hiérarchie d'adresse permet de faire de l'agrégation. Par exemple un préfixe de 64bit (dont la partie initiale de 48bit à été fournie par l'ISP) identifie un site.  Le suffixe de 64bit identifie une interface sur ce site.
  
- ### Transition d'IPv4 à IPv6
+### Transition d'IPv4 à IPv6
  Malheureusement, tous les routeurs ne peuvent pas être remplacé d'un coup de manière simultanée pour rendre compatible IPv6.
  
  Dès lors une stratégie de mise en tunnel (*tunneling*) est utilisée et permet à un paquet IPv6 d'être porté en tant que charge d'un paquet IPv4 parmi les routeurs IPv4. Il s'agit en quelque sorte d'un paquet au sein d'un paquet. Le *tunneling* est souvent utilisé dans d'autres contextes.
@@ -1614,7 +1614,7 @@ Enfin les suite successive de 0 unique peuvent être représenté par `::` mais 
 <img src="https://i.imgur.com/QPhESsG.png" width=400/>
 </center>
  
- #### Mise en tunnel et encapsulation
+#### Mise en tunnel et encapsulation
  Plusieurs cas de figure sont à prendre en compte :
  
 - **Plusieurs routeurs IPv6 sont reliés via ethernet** : Utilisation classique, le paquet IPv6 est la charge de la trame de la couche lien. Les adresse de source et de destination sont trouvée dans la charge
@@ -1624,18 +1624,18 @@ Enfin les suite successive de 0 unique peuvent être représenté par `::` mais 
 </center>
 
 - **Un réseaux IPv4 relie deux routeur IPv6** :  Plutôt que regarder la charge de la trame, le routeur va trouver l'adresse source et destination dans l'en-tête IPv4.
- 
- <center>
+
+<center>
 <img src="https://i.imgur.com/m3tppj1.png" width=400/>
 </center>
  
- ## 4.3 Les routeurs
+## 4.3 Les routeurs
  
- ### Vue haut niveau de l'architecture générique d'un routeur
+### Vue haut niveau de l'architecture générique d'un routeur
  
  Le routeur est divisé en deux plan :
- - **Un plan de routage, gestion et contrôle** : Il s'agit d'un plan de niveau logiciel qui opère sur une fenêtre de quelque millisecondes.
- - **Un plan de transfert de données** : Il s'agit d'un plan de niveau matériel qui opère le plus souvent en nanosecondes.
+- **Un plan de routage, gestion et contrôle** : Il s'agit d'un plan de niveau logiciel qui opère sur une fenêtre de quelque millisecondes.
+- **Un plan de transfert de données** : Il s'agit d'un plan de niveau matériel qui opère le plus souvent en nanosecondes.
 
 <center>
 <img src="https://i.imgur.com/QZ2SPj7.png" width=300/>
@@ -1646,7 +1646,7 @@ Enfin les suite successive de 0 unique peuvent être représenté par `::` mais 
 Au niveau du port d'entrée on différencie : 
 - **La couche physique** : réception au niveau bit.
 - **La couche lien** : c.f [Chapitre 6](#chap6)
--  **La commutation décentralisée**: Utilise les valeurs de champs d'en-tête IP, recherche recherche le port de sortie via la table de transfert dans la mémoire du port d'entrée. Le but étant de compléter le traitement de paquet en entrée à vitesse de la ligne. Si trop de paquets arrivent par rapport au taux de transfert, alors un système de queue est mis en place.
+- **La commutation décentralisée**: Utilise les valeurs de champs d'en-tête IP, recherche recherche le port de sortie via la table de transfert dans la mémoire du port d'entrée. Le but étant de compléter le traitement de paquet en entrée à vitesse de la ligne. Si trop de paquets arrivent par rapport au taux de transfert, alors un système de queue est mis en place.
 
 On parlera de :
 - **transfert basé sur la destination** : quand le transfert se base uniquement sur l'adresse IP de destination du paquet.
@@ -2366,12 +2366,12 @@ Scénario :  Un étudiants utilise sont portable sur le réseaux du campus, et e
 	-  Le paquet est décapsulé par le serveur DNS jusqu'à la requête DNS.
 	-  Le serveur DNS réponds à la requête DNS avec l'adresse IP de `www.google.com`.
 	- ✅ Le client dispose de l'adresse IP de `www.google.com`
-	
+
 <center>
 <img src="https://i.imgur.com/y8Mwc1e.png" width=350/>
 </center>
 
-3.  Pour commencer à envoyer des requête HTTP, le client doit ouvrir un socket TCP vers le serveur web :
+3. Pour commencer à envoyer des requête HTTP, le client doit ouvrir un socket TCP vers le serveur web :
 	-   Un segment SYN TCP (premier étape de la poignée de main à 3 étapes) est routée en inter domaine vers le serveurs web.
 	-   Le serveur web réponds avec un TCP SYNACK (étape 2).
 	-   ✅ La connexion TCP est établie.
