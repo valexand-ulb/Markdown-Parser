@@ -32,6 +32,8 @@ private:
 
     std::string parseHeaders(const std::string& md_line_text);
 
+    void parseHeaders(std::istringstream& md_text_stream, std::stringstream& output_stream, std::string& line);
+
     void parseBlockQuotes(std::istringstream& md_text_stream, std::stringstream& output_stream, std::string& line);
 
     void parseCheckList(std::istringstream& md_text_stream, std::stringstream& output_stream, std::string& line);

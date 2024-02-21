@@ -17,7 +17,6 @@ std::string MarkdownParser::line_by_line_parsing(const std::string& md_text) {
     std::istringstream md_text_stream(md_text);
     std::stringstream output_stream;
     std::string line;
-
     while (std::getline(md_text_stream, line)) {
         if (std::regex_search(line, std::regex(rules.HEADERS.first))) { // header mode
             std::cout << "Parsing headers..." << std::endl;
@@ -113,7 +112,7 @@ void MarkdownParser::parseOrderedList(std::istringstream& md_text_stream, std::s
     std::string terminaison_line = line;
     std::string ordered_list_text = "<ol>\n";
     do {
-        terminaison_line = terminaison_line.substr(3);
+        terminaison_line = terminaison_line.substr(3); // remove the number, the dot and the space
         ordered_list_text += "<li>" + parseTextElements(terminaison_line) + "</li>\n";
     } while(std::getline(md_text_stream,terminaison_line) && !terminaison_line.empty());
     ordered_list_text += "</ol>\n";

@@ -2366,12 +2366,12 @@ Scénario :  Un étudiants utilise sont portable sur le réseaux du campus, et e
 	-  Le paquet est décapsulé par le serveur DNS jusqu'à la requête DNS.
 	-  Le serveur DNS réponds à la requête DNS avec l'adresse IP de `www.google.com`.
 	- ✅ Le client dispose de l'adresse IP de `www.google.com`
-	
+
 <center>
 <img src="https://i.imgur.com/y8Mwc1e.png" width=350/>
 </center>
 
-3.  Pour commencer à envoyer des requête HTTP, le client doit ouvrir un socket TCP vers le serveur web :
+3. Pour commencer à envoyer des requête HTTP, le client doit ouvrir un socket TCP vers le serveur web :
 	-   Un segment SYN TCP (premier étape de la poignée de main à 3 étapes) est routée en inter domaine vers le serveurs web.
 	-   Le serveur web réponds avec un TCP SYNACK (étape 2).
 	-   ✅ La connexion TCP est établie.
