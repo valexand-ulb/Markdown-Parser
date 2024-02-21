@@ -1,26 +1,25 @@
 # INFO-F303 : Introduction au Réseaux
-${TOC}
 # Chapitre 1 : Réseaux d'ordinateurs et Internet
 ## 1.1 : Qu'est ce qu'internet
 ### Internet : La vue matérielle 
 Internet peut être vu comme un ensemble de machines interconnectées. Les hôtes sont les machines exécutants des applications en bordure de réseaux. A cela il faut ajouter des routeurs et des *switches* (commutateurs) permettant l'envoi et la réception de paquets (morceaux de données), le tout reliés aux hôtes à l'aide de câbles, fibres, etc.
 Un ensemble de machines reliées entre elles et gérées par une même instance / organisation est appelé réseaux. En résumé, internet est un réseaux de réseaux.
 Pour facilité la communication entre toutes ces machines il existe un ensemble de protocoles opérant à différents niveaux (Par exemple : HTTP, HTTPS ,  TCP, IP, WiFi, etc. ). Pour éviter que chaque constructeurs imposes ses propres idées et rends plus difficile la gestion d'un réseaux, l'***Internet Engineering Task Force*** (**IETF**) se charge d'établir des standards de communication appelés **RFC** (*request for comments*).
-<center>
+
 <img src="https://i.imgur.com/DX5FMbJ.png" width=250></img>
-</center>
+
 
 ### Internet : La vue service
 En ajoutant un certain niveau d'abstraction , internet peut être vu comme une infrastructure qui apporte des services à un ensemble d'applications. Ces services comprennent par exemple le Web, le streaming de vidéos, la gestion de mails etc. Concrètement, il s'agit de "crochets" permettant à des application de communiquer par envoi et réception de message via un service de transport fourni.
-<center>
+
 <img src="https://i.imgur.com/33ShwTy.png" width=300></img>
-</center>
+
 
 ### Qu'est ce qu'un protocole ?
 Un protocole est un ensemble de règles qui définissent la manière dont les messages sont envoyés et reçu parmi les entités d'un réseaux après formatages et organisation.
-<center>
+
 <img src="https://i.imgur.com/Pdl063f.png" width=300></img>
-</center>
+
 
 ## 1.2 : Bordure du réseaux
 ### Une vue plus détaillées de la structure d'internet
@@ -55,10 +54,10 @@ Au sein du réseaux, il faut différencier :
 Un hôte se connecte à internet via un fournisseur d'accès à internet (**ISP**: *Internet Service Provider*). Il peut s'agir d'une entreprise (compagnie, université, commercial) ou  un résidentiel. 
 En toute logique, les ISPs doivent être interconnectés pour permettre la communication entre deux hôtes.
 De tels agencements implique une structure complexe qui prend cependant tout son sens d'un point de vue économique. En effet, si nous avons des millions d'hôtes les relier chacun entre eux impliquerait une augmentation de connexions en $O(N^2)$ (voir schéma). Une solution serait de connecté un ensemble défini de machine à un ensemble d'ISP.
-<center>
+
 <img src="https://i.imgur.com/IxliLcm.png" width=300></img>
 <img src="https://i.imgur.com/eWnT6nJ.png" width=300></img>
-</center>
+
 
 Cet ensemble ISPs veulent potentiellement être interconnectés. Cela est possible à l'aide de lien de peering mais aussi à des IXPs (*Internet Exchanges Point*). Il est même possible que certaines grosses entreprise tel que Google lance leurs propres réseaux pour apporter un service aux utilisateurs. On parle alors de *Content Provider Network*.
 <img src="https://i.imgur.com/s5MLbyz.png" width=500></img>
@@ -273,10 +272,10 @@ Les messages requêtes de HTTP sont écrit en caractère ASCII (lisible par l'ê
 - Les lignes d'en-tête
 - Le retour à la ligne indiquant la fin de l'en-tête
 
-<center>
+
 <img src="https://i.imgur.com/psWlBVF.png" width=350 />
 <img src="https://i.imgur.com/vS3GEMg.png" width=200 />
-</center>
+
 
 #### Autres messages de requêtes 
 
@@ -395,9 +394,9 @@ Cela permet un délais en moyenne plus bas avec une solution moins chère.
 #### GET conditionnel
 
 Le but du GET conditionnel est d'envoyé un objet seulement si le cache ne le possède pas. Pour se faire , le cache spécifie une date de la copie lors de sa requête vers le serveur. Si le serveur constate que la date de la requête est la plus à jours, alors il envoi une réponse avec aucun objet?
-<center>
+
 <img src="https://i.imgur.com/3lPSt30.png" width=250 />
-</center>
+
 
 ### HTTP/2
 Cette version de HTTP a pour but de réduire le délais des requêtes HTTP multi objets. 
@@ -651,9 +650,9 @@ Pour rappel, l'hôte reçoit des paquets IP de la couche d'en dessous.
 Chaque paquet IP possède une adresse IP source et destination, ainsi qu'un segment de la couche transport. Chaque segment TCP / UDP possède un numéro de port source et destination.
 
 L'hôte utilise les adresses IP de l'en-tête de la couche réseaux ($H_n$) et le numéro de port de l'en-tête de la couche transport ($H_t$) pour diriger le segment vers le socket approprié
-<center>
+
 <img src="https://i.imgur.com/hHEPU5A.png" width=250 />
-</center>
+
 
 ### Démultiplexage sans connexion (démultiplexage UDP)
 
@@ -738,10 +737,10 @@ Au niveau du receveur, la somme est déterminée de la même manière que pour l
 
 ## 3.4 Principles de transfert de données fiables.
 
-<center>
+
 <img src="https://i.imgur.com/CUbvuLf.png" width=300 />
 <img src="https://i.imgur.com/bQdp0ug.png" width=300 />
-</center>
+
 
 La figure n°1 explicite une abstraction d'un service fiable. Une communication est exécutée entre deux processus distants via un canal fiable. Cependant, la notion de canal fiable est peu réaliste (bruitage du canal, etc.).
 La figure n°2 présente donc l'implémentation d'un service fiable de communication. Puisque le canal ne peut être considéré comme fiable, les données doivent pouvoir ce genre de canal.
@@ -838,27 +837,27 @@ Il existe 4 cas de figures possible lors de l'utilisation de RDT 3.2
 
 - **1. Pas de perte de paquets** : Les paquets ne sont pas perdu, l'envoyeur et le receveur communiquent à l'aide de paquets et de  classiques.
 
-<center>
+
 <img src="https://i.imgur.com/YeGo5Wq.png" width=250 />
-</center>
+
 
 - **2. Perte de paquets** : Un paquet est perdu lors de son envoi, après un temps défini l'envoyeur n'ayant pas reçu de ACK renvoi son paquet.
 
-<center>
+
 <img src="https://i.imgur.com/YSREnuf.png	" width=250 />
-</center>
+
 
 - **3. Perte de ACKs** : Un ACK est perdu et pas reçu par l'envoyeur, nous retrouvons le cas n°2 impliquant que le même paquet est renvoyé.
 
-<center>
+
 <img src="https://i.imgur.com/ezL40XD.png" width=250 />
-</center>
+
 
 - **4. Timeout prémature ou ACK retardé** : Le ACK n'est pas reçu dans les temps et provoque donc un Timeout prématuré. Puisque le Timeout est écoulé, l'envoyeur renvoi le même paquet qui sera donc un duplicata du coté receveur. Le receveur détecte le duplicata, le supprime et renvoi le ACK originellement retardé. Entre temps l'envoyeur à reçu le ACK original et se contente d'ignorer le duplicata de ACK.
 
-<center>
+
 <img src="https://i.imgur.com/sypZK0l.png" width=250 />
-</center>
+
 
 #### RDT 3.3 : Amélioration de la police des ACK
 
@@ -899,9 +898,9 @@ U_{\text{sender}} = \frac{L/R}{RTT + L/R} = \frac{.008}{30.008} = 0.00027
 $$
 > Rappel : Taux d'utilisation = transfert / temps écoulé
 
-<center>
+
 <img src="https://i.imgur.com/qBc1ovC.png" width=250 />
-</center>
+
 
 ### Protocoles mis en pipeline (*pipelined protocols*)
 
@@ -973,10 +972,10 @@ Du point de vue du receveur :
 #### Selective Repeat : Un dilemme
 Soit des numéros de séquences allant de 0 à 3 et une fenêtre de taille 3.
 Il existe un problème ou un paquets est acceptable si la fenêtre de réception possède le même numéro de séquence (voir figure 2)
-<center>
+
 <img src="https://i.imgur.com/O1e6loM.png" width=250 />
 <img src="https://i.imgur.com/O1e6loM.png" width=250 />
-</center>
+
 
 #### Taille de fenêtre maximale avec SR
 
@@ -1011,10 +1010,10 @@ Du point de vue de l'envoyeur, on distingue trois événements :
 <img src="https://i.imgur.com/v7JIn4W.png" width=500 />
 
 #### Scénario de retransmission
-<center>
+
 <img src="https://i.imgur.com/K5gitAM.png" width=300 />
 <img src="https://i.imgur.com/bgSsFWJ.png" width=120 />
-</center>
+
 
 #### TCP : retransmission rapide
 
@@ -1074,14 +1073,14 @@ Plusieurs problématique sont a prendre en compte pour le bon fonctionnement de 
 
 - **Poignée de main fonctionnelle** : 
 
-<center><img src="https://i.imgur.com/WyWax1U.png" width=250 /></center>
+<img src="https://i.imgur.com/WyWax1U.png" width=250 />
 
 - **Connexion à moitié ouverte** :  Le serveur n'accepte pas assez vite la demande de l'envoyeur. L'envoyeur renvoi une demande. Entre temps, la demande initiale à été validée, et le client se termine. Cependant la seconde demande du client est à nouveau validée par le serveur et une connexion est à moitié établie.
 
-<center><img src="https://i.imgur.com/oQSODMl.png" width=250 /></center>
+<img src="https://i.imgur.com/oQSODMl.png" width=250 />
 
 - **Données dupliquées** :  Le serveur n'accepte pas assez vite la demande de l'envoyeur. L'envoyeur renvoi une demande. Entre temps, la demande initiale à été validée par les deux partis et un premier  échange de donné est effectué. Cependant la seconde demande du client est à nouveau validée par le serveur, le client renvoi la même donnée, une connexion est a moitié établie avec en plus un duplicata.
-<center><img src="https://i.imgur.com/yM9ncaD.png" width=250 /></center>
+<img src="https://i.imgur.com/yM9ncaD.png" width=250 />
 
 ### TCP poignée de main à trois (*3-way handshake*)
 
@@ -1189,21 +1188,21 @@ Si nous considérons le débit moyen utile de TCP :  $1.22 \frac{\text{MSS}}{\te
 
 Le principe d'équitabilité en réseaux est plutôt simple. Si $k$ sessions TCP sont ouvertes et partagent le même lien de capacité $R$ alors le taux de chacun devrais être de $R/k$
 
-<center>
+
 <img src="https://i.imgur.com/A0V1h6X.png" width=300 />
-</center>
+
 
 TCP st considéré comme équitable dans des cas idéalisés où les RTT sont les même et le nombre de sessions est fixe.
 
-<center>
+
 <img src="https://i.imgur.com/JOaIRu2.png" width=400 />
-</center>
+
 
 Quand les deux RTT sont différents (par exemple l'un deux fois plus grand que l'autre), la connexion initiale s'intensifie deux fois plus vite. Il 'agit d'un comportement inversement proportionnel au RTT
 
-<center>
+
 <img src="https://i.imgur.com/6MvhN54.png" width=400 />
-</center>
+
 
 ### Equitabilité : Réel  besoin d'être équitable ?
 
@@ -1251,9 +1250,9 @@ Le principe de la couche de réseaux est de transporter un segment d'un hôte en
 On retrouve les protocoles réseaux dans tous les dispositifs Internet ; hôte et routeurs.
 
 Un routeur est un dispositif qui examine les champs d'en-tête de chaque paquet IP passant par ce dernier. En fonction de cette en-tête, il redirige le paquet vers un port de sortie pour permettre l'acheminement de ce dernier sur le réseaux.
-<center>
+
 <img src="https://i.imgur.com/Zkg93Oc.png" width=350 />
-</center>
+
 
 ### Deux fonctions clés de la couche réseau
 
@@ -1305,9 +1304,9 @@ Une adresse IP est représentée comme 32-bit séparé en 4 décimale sur 8bit p
 ```c
 223.1.1.1 = 11011111.00000001.00000001.00000001
 ```
-<center>
+
 <img src="https://i.imgur.com/ExsfKKs.png" width=350 />
-</center>
+
 
 #### Sous-réseaux (*subnet*)
 Un sous-réseaux est un ensemble d'interfaces de compostant qui peuvent s'atteindre physiquement sans passer par un routeur.
@@ -1394,9 +1393,9 @@ Lorsqu'un client sans adresses IP arrive sur un réseaux, les étapes suivantes 
 > Le protocole DHCP utilise UDP et non TCP // TODO
 > Le serveur DHCP ne renvoi pas qu'une adresse mais aussi le nom et l'adresse IP du serveur DNS local, le masque réseaux et l'adresse du premier routeur par rapport au client.
 
-<center>
+
 <img src="https://i.imgur.com/N05FI7w.png" width=500 />
-</center>
+
 
 #### DHCP : Exemple
 
@@ -1429,9 +1428,9 @@ Organisation 7 : 11001000 00010111 0001111. ........ = 200.23.30.0/23
 
 L'adressage hiérarchique permet une annonce efficace des informations de routage.
 
-<center>
+
 <img src="https://i.imgur.com/lGpETXl.png" width=500 />
-</center>
+
 
 > Dans cet exemple nous pouvons par exemple déterminer que toutes adresses commençant par `200.23.16. x/23` est une adresse de l'ISP *fly-by-night*
 
@@ -1439,9 +1438,9 @@ L'adressage hiérarchique permet une annonce efficace des informations de routag
 
 Imaginons comme alternative qu'une organisation 8 obtiennent une gamme d'adresses indépendantes d'un fournisseur. L'organisation 8 peut avoir plusieurs fournisseurs (principe de multihoming) 
 
-<center>
+
 <img src="https://i.imgur.com/WRfxzuI.png" width=500 />
-</center>
+
 
 #### Tables de redirections IP
 Imaginons que la redirections se base uniquement sur les adresses de destination. Comme une adresse est sur $32$bits, nous pouvons donc avoir $2^{32}$ (+4Md) adresses IPv4 différentes. Cependant, toutes les adresses d'un sous-réseaux peuvent être agrégée en une seule entrée de redirection dans la table. Cela permet de sauvegarder de l'espace et permet en plus de rendre la recherche d'adresses plus efficaces.
@@ -1458,16 +1457,16 @@ Imaginons que la redirections se base uniquement sur les adresses de destination
 #### Agrégation supplémentaire dans les tables de redirection
 En reprenant notre exemple de l'ISP *fly-by-night*, il est possible d'agrégé les 8 organisations en une seule adresse étant `200.23.16.0/20` (⚠️ le masque n'est plus `/23`). Cependant une table de redirection est toujours nécessaire au sein de  l'ISP *fly-by-night* pour rediriger vers la bonne compagnie.
 
-<center>
+
 <img src="https://i.imgur.com/akiL4Da.png" width=500 />
-</center>
+
 
 #### Adressage hiérarchique : Routes plus spécifiques
 Imaginons que  l'ISP *fly-by-night* acquiert un autre ISP du nom de *ISPs-R-U* et que l'organisation 1 de la gamme d'adresses de *fly-by-night* passe chez *ISPs-R-U* pour une raisons quelconque. Il est nécessaire que l'organisation 1 garde  sa gamme d'adresse pré attribuée pour éviter une refonte totale de son réseaux. Dès lors l'ISP *ISPs-R-U*  doit maintenant faire l'annonce des adresses de organisation 1.
 
-<center>
+
 <img src="https://i.imgur.com/yK2CYvH.png" width=500 />
-</center>
+
 
 #### Tables de redirections IP : chevauchement
 Dans cet exemple, les tables de redirections au sein d'internet auront deux entrée se chevauchant en les adresse :
@@ -1483,9 +1482,9 @@ Une solution pour éviter ce problème est de prendre en considération la règl
 
 Le principe est plutôt simple, lorsque un recherche une adresse dans la table de transfert pour une adresse de destination donnée, on utilise le plus long préfixe d'adresse qui correspond à notre adresse de destination.
 
-<center>
+
 <img src="https://i.imgur.com/bMjY20J.png" width=500/>
-</center>
+
 
 Par exemple  :
 - `11001000.00010111.00011000.10100001` est redirigé vers le l'interface 1
@@ -1538,30 +1537,30 @@ Cependant NAT est souvent utilisé dans les réseaux domestique, les réseaux d'
 
 Mettons un client veux se connecté à un serveur avec l'adresse `10.0.0.1`. L'adresse du serveur est local à un LAN et seul l'adresse NAT est visible (ici `138.76.29.7`).
 
-<center>
+
 <img src="https://i.imgur.com/LhsSNuP.png" width=250/>
-</center>
+
 
 Une première solution est de configurer de manière statique NAT pour transférer les requêtes de connexion au serveur via le port correspondant (par exemple les requêtes pour `138.76.29.7` au port `2500` seront toujours transférer à l'adresse `10.0.0.1` au port `25000`) 
 
 
 Une seconde solution est le *Plug and Play* universel (UPnP) *Internet Gateway Device* (IDG) Protocol qui permet au hôtes avec un NAT d'apprendre l'adresse IP publique et d'ajouter / supprimer le mappage de port.
 
-<center>
+
 <img src="https://i.imgur.com/Q27mowI.png" width=250/>
-</center>
+
 
 Une troisième solution (utilisée par Skype) est le principe de relais. Un serveur utilisant NAT établis une connexion à un relais. Les client se connectent à ce relais et le relais transfert les paquets entre deux connexions internet.
 
-<center>
+
 <img src="https://i.imgur.com/WzcWfM5.png" width=400/>
-</center>
+
 
 ### Format de paquets
 
-<center>
+
 <img src="https://i.imgur.com/w0s3lzm.png" width=250/>
-</center>
+
 
 ### Fragmentation et réassemblage de paquet
 
@@ -1573,9 +1572,9 @@ Les bits d'en-tête IP sont utilisés pour identifier et réarranger les fragmen
  Soit un paquet de 4000 octets (4Ko) et un lien dont le MTU est de 1500 octets (1.5Ko).
  Le paquet est divisé en trois sous paquets de taille respective : 1500 octets - 1500 octets et 1040 et plusieurs informations sont ajoutés aux fragments : 
  
-<center>
+
 <img src="https://i.imgur.com/k6TprTL.png" width=300/>
-</center>
+
 
 > Un `offset = 0` implique qu'il s'agit du premier fragment.
 > Un `fragflag = 0` implique qu'il s'agit du dernier fragment. Il s'agit d'une copie de la valeur `fragflag` avant segmentation.
@@ -1588,9 +1587,9 @@ Enfin , le passage d'IPv4 à IPv6 implique aucun changement dans les protocoles 
 
 #### Format de Paquet IPv6
 
-<center>
+
 <img src="https://i.imgur.com/n8OcYUP.png" width=500/>
-</center>
+
 
 Par rapport à IPv4 nous remarquons qu'il n'y à plus de *checksum* au sein de l'en-tête pour faciliter le traitement par routeur.
 Pas de fragmentation ou de réassemblage (seulement possible au niveau de la source).
@@ -1610,24 +1609,24 @@ Enfin les suite successive de 0 unique peuvent être représenté par `::` mais 
  
  Dès lors une stratégie de mise en tunnel (*tunneling*) est utilisée et permet à un paquet IPv6 d'être porté en tant que charge d'un paquet IPv4 parmi les routeurs IPv4. Il s'agit en quelque sorte d'un paquet au sein d'un paquet. Le *tunneling* est souvent utilisé dans d'autres contextes.
  
-<center>
+
 <img src="https://i.imgur.com/QPhESsG.png" width=400/>
-</center>
+
  
 #### Mise en tunnel et encapsulation
  Plusieurs cas de figure sont à prendre en compte :
  
 - **Plusieurs routeurs IPv6 sont reliés via ethernet** : Utilisation classique, le paquet IPv6 est la charge de la trame de la couche lien. Les adresse de source et de destination sont trouvée dans la charge
 
-<center>
+
 <img src="https://i.imgur.com/R23KbMH.png" width=400/>
-</center>
+
 
 - **Un réseaux IPv4 relie deux routeur IPv6** :  Plutôt que regarder la charge de la trame, le routeur va trouver l'adresse source et destination dans l'en-tête IPv4.
 
-<center>
+
 <img src="https://i.imgur.com/m3tppj1.png" width=400/>
-</center>
+
  
 ## 4.3 Les routeurs
  
@@ -1637,9 +1636,9 @@ Enfin les suite successive de 0 unique peuvent être représenté par `::` mais 
 - **Un plan de routage, gestion et contrôle** : Il s'agit d'un plan de niveau logiciel qui opère sur une fenêtre de quelque millisecondes.
 - **Un plan de transfert de données** : Il s'agit d'un plan de niveau matériel qui opère le plus souvent en nanosecondes.
 
-<center>
+
 <img src="https://i.imgur.com/QZ2SPj7.png" width=300/>
-</center>
+
 
 #### Fonctions du port d'entrée 
 
@@ -1651,24 +1650,24 @@ Au niveau du port d'entrée on différencie :
 On parlera de :
 - **transfert basé sur la destination** : quand le transfert se base uniquement sur l'adresse IP de destination du paquet.
 - **transfert généralisé**: quand le transfet se base sur n'importe quel ensemble de valeur de champs d'en-tête.
-<center>
+
 <img src="https://i.imgur.com/xs9J5ij.png" width=300/>
-</center>
+
 
 #### Tissus de commutation (*switching fabrics*)
 Il s'agit de la partie chargée du transfert d'un paquet d'un lien d'entrée au lien de sortie approprié.
 
 Le taux de commutation est défini comme le taux auquel peuvent être transmit les paquets de l'entrée à la sortie.
 
-<center>
+
 <img src="https://i.imgur.com/x45XwLF.png" width=300/>
-</center>
+
 
 On différencie trois tissus de commutation différents : 
 
-<center>
+
 <img src="https://i.imgur.com/ZUJDEbp.png" width=400/>
-</center>
+
 
 > Respectivement : Mémoire - Bus de communication - Réseau interconnecté.
 
@@ -1684,16 +1683,16 @@ Il s'agit d'une mise à l'échelle utilisant plusieurs plan de commutations en p
 Si la commutation est plus lente que les port d'entrée combinées,  une mise en queue peut être effectuée.
 Le blocage *head of the line* ou *HOL blocking* décrit le fait qu'un paquet en tête de queue peut empêcher d'autre paquets d'avancer.
 
-<center>
+
 <img src="https://i.imgur.com/AqN2tJl.png" width=400/>
-</center>
+
 
 #### Mise en queue du port de sortie
 La mise en queue au niveau du port de sortie occurre généralement quand le taux d'arrivée du commutateur excède le taux de sortie du port. Cela peut mener à de l'ajout de délais ainsi que des pertes de paquet dû à un dépassement de mémoire tampon ou *buffer overflow*. S'il il faut, un traitement plus évolué que FIFO peut être appliqué aux paquets et de la fragmentation peut être impliquée.
 
-<center>
+
 <img src="https://i.imgur.com/cS5mTsN.png" width=400/>
-</center>
+
 
 # Chapitre 5 : La couche de Réseaux - Le plan de contrôle
 
@@ -1706,9 +1705,9 @@ Cela peux se faire via deux approche ; un contrôle par routeur plus traditionne
 ### Plan de contrôle par routeur
 Il s'agit d'un ensemble de composants d'algorithme de routage présents dans chaque routeurs qui interagissent sur le plan de contrôle. 
 
-<center>
+
 <img src="https://i.imgur.com/XBuegfd.png" width=400/>
-</center>
+
 
 ## 5.2 Protocole de contrôle de message Internet (ICMP)
 Il s'agit d'un protocole utilisé par les hôtes et routeurs pour communiquer des information sur le niveau réseaux. Ces informations peuvent être des reportage d'erreurs (hôte, port, protocole inatteignable, etc.) ou une demande d'écho / réponse (utilisé par `ping`).
@@ -1750,9 +1749,9 @@ Basiquement, les coût de liens sont des quantité additionnables de par leurs c
 Si un routeur $J$ est sur le chemin d'un routeur $I$ vers un routeur $K$ alors le chemin optimal de $J$ vers $K$ est aussi sur la même route. 
 Cette propriété a pour conséquence de rendre l'ensemble des chemins optimaux d'une source à une destination comme arbre enraciné à la source.
 
-<center>
+
 <img src="https://i.imgur.com/LNvKlL2.png" width=400 />
-</center>
+
 
 #### Classification d'algorithme de routage
 
@@ -1772,17 +1771,17 @@ Les paquets d'état de liaison sont composés :
 - D'un nœud source, un numéro de séquence et d'un âge.
 -  D'un vecteur de distance limité au voisinage .
 
-<center>
+
 <img src="https://i.imgur.com/TdGGTFj.png" width=500 />
-</center>
+
 
 #### Phase 1 : Distribuer les paquets d'état de liaison
 Les paquets sont "inondés" de manière sélective. Les paquets ne sont pas envoyés par le liens sur lequel ils sont arrivé et les duplicatas sont détecté par le numéro de séquence.
 Une fois le paquet arrivé, il est ACK.
 
-<center>
+
 <img src="https://i.imgur.com/17V4wx8.png" width=500 />
-</center>
+
 
 
 #### Phase 1 : Problème potentiels 
@@ -1806,9 +1805,9 @@ Chaque routeur doit donc calculer le chemin de lui-même vers tout les autres ro
 La table de transfert est déterminée à partir de l'arbre du chemin de plus faible coût.
 Les identifiants de routeurs sont les adresses IP. En pratique les nœud avec un sous réseaux possède uniquement le préfixe de l'IP.
 
-<center>
+
 <img src="https://i.imgur.com/eLKSYbZ.png" width=500 />
-</center>
+
 
 #### Routage OSPF (*open shortest path first*)
 
@@ -1833,9 +1832,9 @@ Il s'agit d'une hiérarchie à deux niveau :
 
 Les LSA sont seulement envoyé dans la structure ou la zone locale et chaque nœud possède la topologie de la zone locale ou de la structure.
 
-<center>
+
 <img src="https://i.imgur.com/RoRtfG4.png" width=500 />
-</center>
+
 
 ### Routage par vecteur de distance
 Basé sur l'équation de Bellman-Ford (programmation dynamique)
@@ -1902,17 +1901,17 @@ BGP fournis à chaque AS un moyen de:
 
 ### Connexion eBGP et iBGP
 
-<center>
+
 <img src="https://i.imgur.com/2yp0E9k.png" width=500 />
-</center>
+
 
 ### Les bases de BGP
 
 Une session BGP est ouverte par deux routeurs BGP (alias pairs) qui échanges des message BGP via une connexion TCP semi permanente dans le but d'annoncer les chemins vers différentes destination (préfixe IP). Le protocole BGP est dit protocole de "vecteur de chemin". Cela signifie que que tout le chemin est propagé, pas juste la distance (en opposition à DV).
 
-<center>
+
 <img src="https://i.imgur.com/MH8Wcmd.png" width=500 />
-</center>
+
 
 > Quand le routeur passerelle 3a de AS3 annonce le chemin AS3,X à AS2 via la passerelle 2C, AS3 promet a AS2 d'envoyer les paquet vers le sous réseaux X
 
@@ -1926,17 +1925,17 @@ On parle de routage basé sur une police. La passerelle recevant une annonce de 
 
 ### Annonce de chemin BGP :
 
-<center>
+
 <img src="https://i.imgur.com/JWZihYe.png" width=500 />
-</center>
+
 
 > - Le routeur 2c de AS2 reçoi une annonce de chemin `AS3,X` (via eBGP) à partir du routeur 3a.
 > - Basé sur la police d'importation de AS2, le routeur 2C de AS2 accepte le chemin `AS3,X` et le propage à tous les routeurs de AS2 via iBGP.
 > - Basé sur la police d'exportation de AS2. le routeur 2a de AS2 annonce le chemin via eBGP `AS2,AS3,X` vers le routeur 1c de AS1.
 
-<center>
+
 <img src="https://i.imgur.com/IuOzdCe.png" width=500 />
-</center>
+
 
 > - Le routeur passerelle 1c de AS1 apprend le chemin `AS2,AS3,X` de 2a.
 > - Le routeur passerelle 1c de AS1 apprends le chemin `AS3,X` de 3a.
@@ -1963,9 +1962,9 @@ Via BGP, un routeur à la possibilité d'apprendre plus d'une route vers une des
 
 #### Critère de la patate chaude
 
-<center>
+
 <img src="https://i.imgur.com/t1DlA69.png" width=500 />
-</center>
+
 
 > Le routeur 2d apprend via iBGP qu'il peut utiliser une route via 2a ou 2c.
 > Choisi le routeur 2a car le cout intra domaine est le plus faible.
@@ -1974,9 +1973,9 @@ Via BGP, un routeur à la possibilité d'apprendre plus d'une route vers une des
 
 Les ISP veulent seulement diriger le trafic d'un réseaux client et ne veux pas porter un trafic de transit entre d'autre ISP.
 
-<center>
+
 <img src="https://i.imgur.com/UxLbpPi.png" width=500 />
-</center>
+
 
 > 💡
 > -  A,B,C sont des fournisseurs réseaux.
@@ -1984,9 +1983,9 @@ Les ISP veulent seulement diriger le trafic d'un réseaux client et ne veux pas 
 > - x est attaché a deux fournisseurs.
 > - police à assurer : x ne veut pas passer de B a C via x. Donc x n'annoncera pas à B la route C.
 
-<center>
+
 <img src="https://i.imgur.com/y0LMvIg.png" width=500 />
-</center>
+
 
 > 💡 
 > - A annonce le chemin Aw à B et à C.
@@ -1997,11 +1996,11 @@ Les ISP veulent seulement diriger le trafic d'un réseaux client et ne veux pas 
 
 Les annonces BCP perçues (en bleu) sont seulement transférés via les liens vert pour éviter les trafic de transit couteux.
 
-<center>
+
 <img src="https://i.imgur.com/lcbJxRA.png" width=250 />
 <img src="https://i.imgur.com/gUrgMw2.png" width=250 />
 <img src="https://i.imgur.com/6PsbsgX.png" width=250 />
-</center>
+
 
 Il est donc facile de voir que le trafic résultant sera '*valley-free*' : 
 1. Après être allés vers le bas une fois, les paquets peuvent uniquement continuer vers le bas.
@@ -2010,9 +2009,9 @@ Il est donc facile de voir que le trafic résultant sera '*valley-free*' :
 
 ### Processus BCP - Résumé
 
-<center>
+
 <img src="https://i.imgur.com/GwAMVqD.png" width=500 />
-</center>
+
 
 - **Filtres d'entrée (*input filter*)**: évite les cycle dans les chemins AS, évite certains AS dans les chemins AS.
 - **Critère de sélection de route (*route selection*)** : Dans un premier temps local et orienté business ensuite plus cours chemin et enfin la patate chaude
@@ -2061,9 +2060,9 @@ La couche lien est implémentée dans chaque interface de routeur et chaque hôt
 
 ### Communication de 2 interfaces d'hôte via lien
 
-<center>
+
 <img src="https://i.imgur.com/x6RcV1w.png" width=500 />
-</center>
+
 
 > 💡
 > - **Côté envoyeur** : Encapsulation du paquet IP -  Ajouts des bits de détections d'erreurs - Utilisation possible du transfert de donné fiable, du contrôle de flot etc. 
@@ -2075,21 +2074,21 @@ Un LAN est un lien multipoint avec des équipements de transmission (par exemple
 
 - **Câble partagé** : Réseaux d'accès basé sur des câbles, généralement Ethernet.
 
-<center>
+
 <img src="https://i.imgur.com/CxagCEk.png" width=300 />
-</center>
+
 
 - **Fréquence radio partagé** : Wi-Fi, 4G/5G, satellite.
 
-<center>
+
 <img src="https://i.imgur.com/Z2cZruS.png" width=300 />
-</center>
+
 
 Un LAN est donc la structure de la couche lien qui implémente un sous-réseaux IP multipoint. Un envoyeur peut envoyer une trame vers un receveur désigné dans son LAN, vers tout les receveurs (on parle alors de diffusion = '*broadcast*') ou vers un groupe cible de receveur (*multicast*). Un LAN peut être câblé ou non, dans ce cours nous nous focaliserons sur les LAN câblé. 
 
-<center>
+
 <img src="https://i.imgur.com/sK23rfl.png" width=250 />
-</center>
+
 
 ### Adresses MAC, adresses de la couche lien
 
@@ -2115,9 +2114,9 @@ Un nœud A souhaite envoyer un paquet IP à B. L'adresse MAC de B n'est pas conn
 2. B étant concerné par la requête ARP réponds à A en envoyant sa propre adresse MAC. Si B ne possédait pas l'adresse MAC de A, alors il en profite pour mettre à jour sa table.
 3. A reçoit la réponse de B, et ajoute l'entrée dans sa table ARP.
 
-<center>
+
 <img src="https://i.imgur.com/HrZHasn.png" width=400 />
-</center>
+
 
 ### Routage vers un autre sous réseaux
 
@@ -2135,9 +2134,9 @@ Reprenons l'exemple ci-dessus, sauf que cet fois ci A et B sont sur deux sous r�
 
 ### Structure de trame Ethernet
 L'interface d'envoi encapsule un paquet IP (ou d'autre paquet des protocoles de la couche réseaux) dans une trame Ethernet :
-<center>
+
 <img src="https://i.imgur.com/e0Nq2Hj.png" width=450/>
-</center>
+
 
 - **Préambule** (*'préambule'*) : Utilisé pour synchroniser le taux d'horloge (? *clock rates*) du receveur et de l'envoyeur.  7 octets de `10101010` suivit par un octet de `10101011`.
 - **Adresses** (destination + source) : 6 octet pour l'adresse MAC source et 6 bytes pour l'adresse MAC  de destination. Si l'adapteur reçoit une trame avec une adresse de destination correspondante, ou avec une adresse de diffusion (paquet ARP par exemple), il passe cette trame vers un protocole de couche supérieur. Sinon le rejette.
@@ -2149,9 +2148,9 @@ L'interface d'envoi encapsule un paquet IP (ou d'autre paquet des protocoles de 
 - **Bus**: populaire jusqu'au milieux des années 90, tout les nœuds sont dans le même domaine de collision.
 - **Topologie en étoile** : La topologie en bus est remplace par un appareil central. Avant il s'agissait d'un hub, maintenant d'un switch. Plus simple à contrôler.
 
-<center>
+
 <img src="https://i.imgur.com/iaZIID8.png" width=450/>
-</center>
+
 
 ### Ethernet : Protocole MAC
 Un problème commun est l'interférence (la collision) quand deux ou plusieurs trames sont transmise en simultanées sur un simple canal en diffusion partagée. Pour palier à ce problème Ethernet utilise le protocole MAC.
@@ -2225,9 +2224,9 @@ Quand une trame arrive au niveau d'un switch :
 
 ### LAN Ethernet : Inconvénients d'une structure physique en arbre
 
-<center>
+
 <img src="https://i.imgur.com/4Fex50e.png" width=450/>
-</center>
+
 
 Touts les principes énoncés jusqu'à maintenant ne faisait pas intervenir de cycle.
 
@@ -2236,9 +2235,9 @@ Touts les principes énoncés jusqu'à maintenant ne faisait pas intervenir de c
 Soit trois switch en cycle ayant aucune adresse de destination au sein de leurs table de transfert. Lorsqu'une trame est envoyé par un nœud, les switch vont provoqué une inondation volontaire qui bouclera à l'infini.
 Une solution à ce problème est de construire un arbre couvrant logique de la topologie.
 
-<center>
+
 <img src="https://i.imgur.com/NIn9JLJ.png" width=350/>
-</center>
+
 
 #### Arbres couvrants
  Lors de la conception d'un arbre couvrant, il y à trois étapes importante : 
@@ -2270,9 +2269,9 @@ Une telle infrastructure implique plusieurs défis allant de la fiabilité à la
 
 ### Réseaux de centre de données : éléments réseaux
 
-<center>
+
 <img src="https://i.imgur.com/mnFYuHA.png" width=350/>
-</center>
+
 
 - **Routeurs de bordure** : Connexions hors du centre de données.
 - **Switch de tier 1** : Connecte environs 16 switch de Tier 2 en dessous.
@@ -2292,9 +2291,9 @@ Il existe des balanceur de charges qui reçoivent des requêtes de clients exter
 Soit D les données protégée par une vérification d'erreurs,  incluant les en-tête de trame.
 Soit EDC le champ pour la détection d'erreur (et parfois la correction).
 
-<center>
+
 <img src="https://i.imgur.com/KIJl3rH.png" width=350/>
-</center>
+
 
 La détection d'erreur n'est pas toujours fiable à 100%. Un bon choix de fonction $f$ ainsi qu'un champ plus grand au niveau de EDC conduit à une meilleur détection / correction.
 
@@ -2302,15 +2301,15 @@ La détection d'erreur n'est pas toujours fiable à 100%. Un bon choix de foncti
 Il s'agit d'une méthode simple. On différencie : 
 - **La parité de bit simple** : détecte une seule erreur de bit, un bit de poids fort / faible est mis à 1 lorsqu'on retrouve un nombre pair de 1 dans l'envoi.
 
-<center>
+
 <img src="https://i.imgur.com/8E054eS.png" width=250/>
-</center>
+
 
 - **La parité de bit en double dimension** : détecte et corrige une seul erreur de bit. Principe du bit de parité sur les composantes x et y d'un tableau.
 
-<center>
+
 <img src="https://i.imgur.com/Uyq9zTX.png" width=250/>
-</center>
+
 
 ### EDC dans TCP/UDP : checksum
 Le but du checksum dans TCP/UDP est de détecter les changements de bits au sein d'un segment transmit.
@@ -2326,9 +2325,9 @@ Soit :
 - R : les bits de CRC au nombre de $r$.
 - G : les bits de pattern (générateur) au nombre de $r+1$
 
-<center>
+
 <img src="https://i.imgur.com/WgXf2JS.png" width=300/>
-</center>
+
 
 Le but est simple : Choisi $r$ bits parmi le champs CRC telle que  D et R soient exactement divisible par G.
 Comme le receveur connais G, il divise les champs D et R par G. Si la division possède un reste, alors une erreur est détectée.
@@ -2347,18 +2346,18 @@ Scénario :  Un étudiants utilise sont portable sur le réseaux du campus, et e
 	- Le serveur DHCP formule un ACK DHCP contenant l'adresse IP du client, l'adresse IP du premier routeur, le nom et l'adresse du serveur DNS.
 	- L'encapsulation se fait au niveau du serveur DHCP et la trame est transmise via le LAN (apprentissage du switch) et décapsulée au niveau du client. Le client DHCP reçoit une réponse ACK DHCP.
 	- ✅ Le client possède maintenant une adresse IP, connait le nom et l'adresse du serveur DNS et connait l'adresse IP du premier routeur
-<center>
+
 <img src="https://i.imgur.com/wlxQqM8.png" width=250/>
-</center>
+
 
 2.  Avant de pouvoir envoyer une requête HTTP, le client à besoin de connaitre l'adresse IP de `www.google.com`. Il va donc utiliser le protocole DNS :
 	- Une requête DNS est créé, encapsulée dans UDP,  dans IP et enfin dans Ethernet 802.3. Pour envoyer la trame au routeur, le client a besoin d'effectué  une requête ARP afin de connaitre l'adresse MAC de ce dernier : 
 		- Une requête ARP est envoyée en *broadcast*, perçue par le routeur qui réponds via ARP en donnant son adresse d'interface routeur.
 		- ✅ Le client dispose maintenant de l'adresse MAC du routeur et peut donc envoyer sa trame contenant la requête DNS.
 
-<center>
+
 <img src="https://i.imgur.com/MrTAgxg.png" width=250/>
-</center>
+
 
 2. Suite :
 	-  Le paquet IP contenant la requête DNS est transférée via le switch LAN du client vers le premier routeur.
@@ -2367,18 +2366,16 @@ Scénario :  Un étudiants utilise sont portable sur le réseaux du campus, et e
 	-  Le serveur DNS réponds à la requête DNS avec l'adresse IP de `www.google.com`.
 	- ✅ Le client dispose de l'adresse IP de `www.google.com`
 
-<center>
+
 <img src="https://i.imgur.com/y8Mwc1e.png" width=350/>
-</center>
+
 
 3. Pour commencer à envoyer des requête HTTP, le client doit ouvrir un socket TCP vers le serveur web :
 	-   Un segment SYN TCP (premier étape de la poignée de main à 3 étapes) est routée en inter domaine vers le serveurs web.
 	-   Le serveur web réponds avec un TCP SYNACK (étape 2).
 	-   ✅ La connexion TCP est établie.
 
-<center>
 <img src="https://i.imgur.com/ecza1Xw.png" width=300/>
-</center>
 
 4. Le client peut enfin envoyer des requête HTTP vers le serveur via le socket TCP : 
 	- Le paquet IP contenant la requête HTPP est encapsulée puis dirigée vers `www.google.com`, décapsulée.
@@ -2386,6 +2383,5 @@ Scénario :  Un étudiants utilise sont portable sur le réseaux du campus, et e
 	- Le paquet IP contenant la réponse HTTP est redirigée vers le client.
 	- ⭐️ Une page web s'affiche. (ENFIN !)
 
-<center>
+
 <img src="https://i.imgur.com/px3J7gj.png" width=300/>
-</center>

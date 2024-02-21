@@ -6,14 +6,6 @@
 #define REGEX_RULES_H
 
 struct RegexRemplacementRules {
-    //  headers rules :
-    std::pair<const char *, const char *> h1 = {"# (.*)", "<h1>$1</h1>"};
-    std::pair<const char *, const char *> h2 = {"## (.*)", "<h2>$1</h2>"};
-    std::pair<const char *, const char *> h3 = {"### (.*)", "<h3>$1</h3>"};
-    std::pair<const char *, const char *> h4 = {"#### (.*)", "<h4>$1</h4>"};
-    std::pair<const char *, const char *> h5 = {"##### (.*)", "<h5>$1</h5>"};
-    std::pair<const char *, const char *> h6 = {"###### (.*)", "<h6>$1</h6>"};
-
     // bold, italic, strikethrough and paragraph rules :
     std::pair<const char *, const char *> bold = {R"(\*\*\s?([^\n]+)\*\*)", "<strong>$1</strong>"};
     std::pair<const char *, const char *> italic = {R"(\*(.*?)\*)", "<em>$1</em>"};
@@ -24,16 +16,7 @@ struct RegexRemplacementRules {
     std::pair<const char *, const char *> images = {R"(!\[(.*?)\]\((.*?)\))", "<img src=\"$2\" alt=\"$1\">"};
 
     // blockquotes rules, inline code and horizontal rule rules :
-    std::pair<const char *, const char *> blockquotes = {"^> (.*)$", "<blockquote>$1</blockquote>"};
     std::pair<const char *, const char *> inline_code = {"`([^`\n]+)`", "<code>$1</code>"};
-    std::pair<const char *, const char *> horizontal_rule = {"^\\s*([-*_]){3,}\\s*$", "<hr>"};
-
-    // Code block rules :
-    std::pair<const char *, const char *> code_block = {R"(```(\w+)([\s\S]*?)```)", "<pre><code class=\"$1\">$2</code></pre>"};
-
-    // Line break and paragraph rules :
-    std::pair<const char *, const char *> line_break = {"([^<>\r\n]+)(?!\\s*<\\w+>)\r?\n", "$1<br>\n"};
-    std::pair<const char *, const char *> paragraph = {"([^<>]+)\n\n", "$1<br><br>\n"};
 };
 
 #endif //REGEX_RULES_H

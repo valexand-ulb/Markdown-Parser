@@ -6,15 +6,10 @@
 #define MD_INTERPRETER_H
 
 #include <regex>
-#include <vector>
 #include <iostream>
-#include <iomanip>
 
-#include "RegexRules.h"
-#include "token/Token.h"
+#include "regex_rules.h"
 #include "regex_rules/regex_remplacement_rules.h"
-#include "regex_rules/regex_token_rules.h"
-
 
 class MarkdownParser {
 
@@ -27,8 +22,6 @@ public:
 private:
     RegexRules rules;
     RegexRemplacementRules regex_rules;
-    RegexTokenRules token_rules;
-    std::vector<Token> tokens;
 
     std::string parseHeaders(const std::string& md_line_text);
 

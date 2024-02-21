@@ -5,8 +5,6 @@
 #include "HtmlToPdf.h"
 
 
-
-
 int HtmlToPdf::convert_html_to_pdf(const std::string& html_content, const std::string& pdf_file) {
 
     // Write the HTML content to a temporary file

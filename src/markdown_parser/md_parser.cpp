@@ -18,33 +18,32 @@ std::string MarkdownParser::line_by_line_parsing(const std::string& md_text) {
     std::stringstream output_stream;
     std::string line;
     while (std::getline(md_text_stream, line)) {
-        if (std::regex_search(line, std::regex(rules.HEADERS.first))) { // header mode
-            std::cout << "Parsing headers..." << std::endl;
-            output_stream << parseHeaders(parseTextElements(line)) << std::endl;
+        if (std::regex_search(line, std::regex(rules.HEADERS))) { // header mode
+            parseHeaders(md_text_stream, output_stream, line);
         }
-        else if (std::regex_search(line, std::regex(rules.HORIZONTAL_RULE.first))) { // horizontal rule mode
+        else if (std::regex_search(line, std::regex(rules.HORIZONTAL_RULE))) { // horizontal rule mode
             std::cout << "Parsing horizontal rule..." << std::endl;
             output_stream << "<hr>" << std::endl;
         }
-        else if (std::regex_search(line, std::regex(rules.BLOCKQUOTES.first))) {   // blockquote mode
+        else if (std::regex_search(line, std::regex(rules.BLOCKQUOTES))) {   // blockquote mode
             parseBlockQuotes(md_text_stream, output_stream, line);
         }
-        else if (std::regex_search(line, std::regex(rules.CHECKLIST.first))) { // checklist mode
+        else if (std::regex_search(line, std::regex(rules.CHECKLIST))) { // checklist mode
             parseCheckList(md_text_stream, output_stream, line);
         }
-        else if (std::regex_search(line, std::regex(rules.ORDERED_LIST.first))) { // ordered list mode
+        else if (std::regex_search(line, std::regex(rules.ORDERED_LIST))) { // ordered list mode
             parseOrderedList(md_text_stream, output_stream, line);
         }
-        else if (std::regex_search(line, std::regex(rules.UNORDERED_LIST.first))) { // unordered list mode
+        else if (std::regex_search(line, std::regex(rules.UNORDERED_LIST))) { // unordered list mode
             parseUnorderedList(md_text_stream, output_stream, line);
         }
-        else if (std::regex_search(line, std::regex(rules.TABLE.first))) { // table mode
+        else if (std::regex_search(line, std::regex(rules.TABLE))) { // table mode
             parseTable(md_text_stream, output_stream, line);
         }
-        else if (std::regex_search(line, std::regex(rules.CODEBLOCK.first))) { // codeblock mode
+        else if (std::regex_search(line, std::regex(rules.CODEBLOCK))) { // codeblock mode
             parseCodeBlock(md_text_stream, output_stream, line);
         }
-        else if (std::regex_search(line, std::regex(rules.TEXT.first))){ // paragraph mode
+        else if (std::regex_search(line, std::regex(rules.TEXT))){ // paragraph mode
             parseParagraph(md_text_stream, output_stream, line);
         }
 
@@ -67,13 +66,15 @@ std::string MarkdownParser::parseTextElements(std::string& md_text_line) {
     return md_text_line;
 }
 
-std::string MarkdownParser::parseHeaders(const std::string& md_line_text) {
+void MarkdownParser::parseHeaders(std::istringstream& md_text_stream, std::stringstream& output_stream, std::string& line) {
+    std::cout << "Parsing headers..." << std::endl;
+
     unsigned short int header_level = 0;
-    while (md_line_text[header_level] != ' ' && md_line_text[header_level] == '#'){
+    while (line[header_level] != ' ' && line[header_level] == '#') {
         header_level++;
     }
     std::string header_tag = "<h" + std::to_string(header_level) + ">";
-    return header_tag + md_line_text.substr(header_level+1) + "</h" + std::to_string(header_level) + ">";
+    output_stream << header_tag + line.substr(header_level+1) + "</h" + std::to_string(header_level) + ">" << std::endl;
 }
 
 void MarkdownParser::parseBlockQuotes(std::istringstream& md_text_stream, std::stringstream& output_stream, std::string& line) {
