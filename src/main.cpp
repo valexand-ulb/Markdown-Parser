@@ -40,7 +40,7 @@ int main()
     outputFile << content;
     outputFile << HtmlUtils::get_html_tail();
 
-    //HtmlToPdf::convert_html_to_pdf(content, "test/test.pdf");
+    HtmlToPdf::convert_html_to_pdf(content, "test/test.pdf");
     outputFile.close();
 
     return 0;
