@@ -3,7 +3,7 @@
 #include <string>
 
 #include "markdown_parser/md_parser.h"
-#include "markdown_parser/pdf_conversion/HtmlToPdf.h"
+#include "pdf_conversion/HtmlToPdf.h"
 #include "benchmark/Benchmark.h"
 #include "html_utlis/HtmlUtils.h"
 

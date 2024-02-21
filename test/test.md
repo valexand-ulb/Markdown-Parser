@@ -61,7 +61,7 @@ javascript is not a real language
 ```
 
 | col1  |    col2 |  col3 |
-|-------|--------|------|
+|-------|---------|-------|
 | Table |  Header |   Row |
 | Table |  Header |   Row |
 | Table |  Header |   Row |
