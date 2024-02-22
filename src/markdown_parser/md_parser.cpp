@@ -84,7 +84,7 @@ void MarkdownParser::parseBlockQuotes(std::istringstream& md_text_stream, std::s
     do {
         terminaison_line = terminaison_line.substr(2);
         blockquote_text += parseTextElements(terminaison_line) + "\n";
-    } while(std::getline(md_text_stream,terminaison_line) && !terminaison_line.empty());
+    } while(std::getline(md_text_stream,terminaison_line) && terminaison_line[0] == '>');
     blockquote_text += "</blockquote>\n";
     output_stream << blockquote_text << std::endl;
 }
@@ -103,7 +103,7 @@ void MarkdownParser::parseCheckList(std::istringstream& md_text_stream, std::str
             terminaison_line = terminaison_line.substr(3);
             checklist_text += "<li><input type=\"checkbox\">" + parseTextElements(terminaison_line) + "</li>\n";
         }
-    } while(std::getline(md_text_stream,terminaison_line) && !terminaison_line.empty());
+    } while(std::getline(md_text_stream,terminaison_line) && terminaison_line[0] == '-');
     checklist_text += "</ul>\n";
     output_stream << checklist_text << std::endl;
 }
@@ -127,7 +127,7 @@ void MarkdownParser::parseUnorderedList(std::istringstream& md_text_stream, std:
     do {
         terminaison_line = terminaison_line.substr(2);
         unordered_list_text += "<li>" + parseTextElements(terminaison_line) + "</li>\n";
-    } while(std::getline(md_text_stream,terminaison_line) && !terminaison_line.empty());
+    } while(std::getline(md_text_stream,terminaison_line) && terminaison_line[0] == '-');
     unordered_list_text += "</ul>\n";
     output_stream << unordered_list_text << std::endl;
 }
@@ -183,7 +183,7 @@ void MarkdownParser::parseCodeBlock(std::istringstream& md_text_stream, std::str
 void MarkdownParser::parseParagraph(std::istringstream& md_text_stream, std::stringstream& output_stream, std::string& line) {
     std::cout << "Parsing paragraph..." << std::endl;
     std::string terminaison_line = line;
-    std::string paragraph_text = "<p>";
+    std::string paragraph_text = "<p>\n";
     do {
         paragraph_text += parseTextElements(terminaison_line) + '\n';
     } while(std::getline(md_text_stream,terminaison_line) && !terminaison_line.empty());
