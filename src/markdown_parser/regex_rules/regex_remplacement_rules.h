@@ -20,6 +20,9 @@ struct RegexRemplacementRules {
 
     // esacping characters rules :
     std::pair<const char *, const char *> esape_characters = {R"(\\([\\`*_{}<>\[\]#\+\-\.!~\|]))", "$1"};
+
+    // line break rules :
+    std::pair<const char *, const char *> line_break = {R"(\n)", "<br>"};
 };
 
 #endif //REGEX_RULES_H

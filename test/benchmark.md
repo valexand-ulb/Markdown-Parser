@@ -26,6 +26,7 @@ Un protocole est un ensemble de règles qui définissent la manière dont les me
 Comme énoncés précédemment, on retrouve en bordure de réseaux les hôtes. Un hôte est soit un client soit un serveur. De manière générale, les serveurs se trouvent dans des *data centers*.
 Les hôtes ont généralement accès physiquement au réseaux via une connexion câblée ou sans fil. 
 On différencie généralement :
+
 - les accès résidentiels : DSL, accès par cables
 - les accès institutionnels : écoles, compagnies, etc.
 - les accès réseaux mobile : WiFi, 4G, 5G, etc.
@@ -36,6 +37,7 @@ On défini la **commutation de paquets** comme le fait que les hôtes décompose
 
 ### Commutation de paquets
 Lors du transfert de paquet, plusieurs notions sont à prendre en compte :
+
 - **Le délais de transmission**: Transmettre un paquet de L-bits via un lient ayant un taux de transfert à R bps (bits par secondes (b/s)) prends $L/R$ secondes. (cf. exemple)
 - **Stocke et transfert** : Lors qu'un paquet arrive au sein d'un routeur, il doit être absolument complet avant de pouvoir être transféré au routeur suivant.
 - **Le délais *end to end***: Est le délais d'envoi d'un paquet d'une machine source à une machine de destination. Dans l'exemple, si le délai de propagation (voir plus loin) est nul, alors le délais *end to end * est de $2L/R$.
@@ -47,6 +49,7 @@ Lors du transfert de paquet, plusieurs notions sont à prendre en compte :
 
 ### Deux notions clés sur le réseaux
 Au sein du réseaux, il faut différencier :
+
 - **Le transfert (*forwarding*)** : Est une action dite locale à un routeur. Les paquets arrivent au routeur via un lien entrant et sont redirigés vers un lien de sortie approprié.
 - **Le routage (*routing*)** : Est une action dite globale à un ensemble de routeur. Il s'agit de déterminer le chemin pris par les paquets de la source à la destination de manière optimale. 
 
@@ -96,6 +99,7 @@ On défini le *bottleneck* (engorgement) comme un lien sur le chemin qui contrai
 
 ## 1.5 : Les couches de protocole et les modèles de services
 Comme décrits précédemment, les réseaux sont assez complexes. En effet, ceux-ci sont composé de beaucoup d'élément :
+
 - Les hôtes
 - Les routeurs
 - Les liens de différents médias
@@ -108,6 +112,7 @@ Nous parlons le plus souvent du modèle OSI (développé par ISO) en 7 couches (
 
 ### Modèle internet 
 Comme décrit précédemment, ce modèles est disposé en 5 couches :
+
 - La couche **application** : Niveau des applications réseaux, on y retrouve les normes HTTP, FTP, SMTP, ...
 - La couche **transport** : Transfert de données de processus à processus, on y retrouve les normes TCP, UDP, ...
 - La couche **réseaux** : Routage des paquets d'une sources à une destination, on y retrouve les normes IP, et protocole de routage
@@ -116,6 +121,7 @@ Comme décrit précédemment, ce modèles est disposé en 5 couches :
 
 ### Modèle OSI
 Le modèles OSI est très semblable au modèle internet et rajoute deux couches entre la couche application et transport :
+
 - La couche **présentation** : permet aux application d'interpréter les données via l'encryptions, la compression, les conventions propres aux machines 
 - La couche **session** : gère la synchronisation, la récupération et l'échange de données.
 
@@ -128,6 +134,7 @@ Ce chapitre a pour but  l'implémentation conceptuelle des aspects de la couche 
 ###  Application réseaux et architecture d'application
 Les application réseaux sont des applications exécutés sur différents *end systems* et qui communiquent via réseaux (par exemple un serveur web qui communique avec un navigateur). Lors de l'implémentation d'une application réseaux, il n'y a aucun besoin d'implémenter du code pour le cœur du réseaux. 
 Les applications sont cependant implémentée avec une structure prédéfinie tel que :
+
 - L'architecture **client-serveur** : Une machine qui communique avec un serveur (voir chapitre suivant).
 - L'architecture **Pair à pair** (P2P): Deux machines qui communique entre elles (voit chapitres suivants)
 
@@ -206,6 +213,7 @@ Par exemple :
 ### Vue d'ensemble HTTP (*HyperTextTransfer Protocol*)
 
 Il s'agit du protocole de la couche d'application du web. Il est basé sur le modèle client-serveur où :
+
 - **Le client** utilise un navigateur qui requête, reçois (via le protocole HTTP) et affiche des objets Web
 - **Le serveur** web envoi des objets en réponse à une requête
 
@@ -213,6 +221,7 @@ Il s'agit du protocole de la couche d'application du web. Il est basé sur le mo
 <img src="https://i.imgur.com/gCnzW0J.png" width=250 />
 
 Le protocole HTTP utilise TCP :
+
 - Le client initialise une connexion TCP (via socket) vers un serveur sur le port 80.
 - Le serveur accepte la connexion TCP du client .
 - Des messages HTTP sont échangés entre le le navigateur (client HTTP) et le serveur Web (serveur HTTP).
@@ -223,6 +232,7 @@ Les protocoles qui maintiennent des états sont généralement plus complexe de 
 
 ### Connexion HTTP : deux types
 On défini deux types de connexion HTTP :
+
 - **Les connexions non persistantes** : La connexion TCP est ouverte, au moins un objet est envoyés via la connexion TCP et enfin la connexion TCP est fermée. Dans le cas du téléchargement de plusieurs objets, plusieurs connexions sont requises.
 - **Les connexions persistantes** : La connexion TCP est ouverte, plusieurs objets sont échangé entre le client et le serveur via une même connexion TCP et enfin la connexion est fermée.
 
@@ -246,6 +256,7 @@ www.someSchool.edu/someDepartement/home.index
 On défini le RTT (*Round Trip Time*) comme le temps pour un petit paquet pour voyager d'un client à un serveur et vice-versa.
 
 Le temps de réponse par objet de HTTP non persistant correspond donc à un ensemble de RTT :
+
 - Un RTT pour initier la connexion TCP
 - Un RTT pour la requête HTTP et les quelques bytes de la réponse 
 - Le temps de transmission d'un objet / fichier
@@ -263,11 +274,13 @@ Le protocole HTTP 1.1 permet au serveur de laisser une connexion ouverte après 
 ### Message HTTP
 
 Le protocole HTTP différencie deux types de messages :
+
 - **Les requêtes**.
 - **Les réponses**.
 
 #### Les requêtes 
 Les messages requêtes de HTTP sont écrit en caractère ASCII (lisible par l'être humain) et composé d'une structure suivante :
+
 - La ligne de requête (GET, POST, HEAD, etc.)
 - Les lignes d'en-tête
 - Le retour à la ligne indiquant la fin de l'en-tête
@@ -291,6 +304,7 @@ Les messages requêtes de HTTP sont écrit en caractère ASCII (lisible par l'ê
 #### Codes de statu des réponses HTTP
 Les codes de statu apparaissent dans la première ligne de la réponse "serveur vers client".
 On retrouve communément :
+
 - **200 OK** : requête effectuée avec succès, l'objet demandé est présent plus loin dans le message
 - **301 Moved Permanently** : L'objet demandé à été déplacé, le nouveau chemin d'accès est disponible dans la suite du message
 - **400 Bad Request** : Message non compris par le serveur
@@ -305,6 +319,7 @@ Cependant les sites web et les navigateurs utilisateur utilisent des cookies pou
 3. Le fichier cookie est gardé sur la machine utilisateur et est géré par le navigateur de l'utilisateur.
 4. La base de donnée *back-end* au niveau du site web.
 Par exemple :
+
 - Un client utilise sont navigateur pour visiter un site de vente en ligne pour la première fois.
 - A l'arrivée de requête HTTP initiale sur le site, le site créé :
 	- Un ID unique sous forme de cookie
@@ -315,6 +330,7 @@ Par exemple :
 
 #### Commentaires :
 Les cookies peuvent être utilisés dans :
+
 - des autorisations.
 - magasin de ventes en lignes.
 - des recommandations publicitaires.
@@ -340,12 +356,14 @@ Cette mise en cache du web permet en plus à des *services providers* moins perf
 <img src="https://i.imgur.com/6fBJ3lb.png" width=250 />
 
 **Details** :
+
 - Le lien d'accès possède un taux de 1.54 Mbps
 - Un RTT d'un routeur d'une institution vers un réseaux est d'environ 2 s
 - On dispose d'un objet web de 100K bits
 - Le taux de requêtes moyen du navigateur vers un serveurs est de 15 / s (taux de données moyen de 1.50 Mbps)
 
 En terme de performance , cela implique :
+
 - Une utilisation lan de .0015
 - Une utilisation du lien d'accès de .97
 - Un délais final de : Délai internet + délais lien d'accès + délais LAN  = 2s + minutes + $\mu$ s
@@ -355,12 +373,14 @@ En terme de performance , cela implique :
 <img src="https://i.imgur.com/CCVYyNB.png" width=250 />
 
 **Details** :
+
 - Le lien d'accès possède un taux de 154 Mbps
 - Un RTT d'un routeur d'une institution vers un réseaux est d'environ 2 s
 - On dispose d'un objet web de 100K bits
 - Le taux de requêtes moyen du navigateur vers un serveurs est de 15 / s (taux de données moyen de 1.50 Mbps)
 
 En terme de performance , cela implique :
+
 - Une utilisation lan de .0015
 - Une utilisation du lien d'accès de .0097
 - Un délais final de : Délai internet + délais lien d'accès + délais LAN  = 2s + ms + $\mu$ s
@@ -372,12 +392,14 @@ Cela permet un meilleur délais au final mais avec un coût certain?
 <img src="https://i.imgur.com/YsNhDpG.png" width=250 />
 
 **Details** :
+
 - Le lien d'accès possède un taux de 154 Mbps
 - Un RTT d'un routeur d'une institution vers un réseaux est d'environ 2 s
 - On dispose d'un objet web de 100K bits
 - Le taux de requêtes moyen du navigateur vers un serveurs est de 15 / s (taux de données moyen de 1.50 Mbps)
 
 En terme de performance , cela implique :
+
 - Une utilisation lan : ?
 - Une utilisation du lien d'accès de ?
 - Un délais final de : ?
@@ -427,6 +449,7 @@ Selon le cas de figure formulé [ici](#hol), voici comment HTTP/2 gère les obje
 ### HTTP/2 vers HTTP/3
 
 Certain des problèmes avancé sur HTTP1.1 sont toujours présents avec HTTP/2 sur une simple connexion TCP :
+
 - La récupération de pertes de paquets atténue toujours la transmission d'objets.
 - Comme dans HTTP1.1 , les navigateurs sont incités à ouvrir de multiples connexion TCP en parallèle pour éviter le décrochage. Cette manière de faire augmente le débit total.
 - Pas de sécurité sur une connexion TCP classique
@@ -442,6 +465,7 @@ Il s'agit d'un protocole de la couche application. Les hôtes , nom de serveurs 
 ### DNS : Services et structure
 
 Les services fourni par un DNS sont :
+
 - La traduction de nom de domaine vers adresse IP.
 - L'alias d'hôte
 - L'alias de serveur mail
@@ -451,6 +475,7 @@ L'idée de centraliser un DNS est pas faisable de par le volume du trafique (Com
 
 ### DNS : Une base de donnée distribuée et hiérarchique
 Soit un client qui cherche l'adresse IP pour le site `www.amazon.com`, une première approximation est faite par le serveur DNS :
+
 - Le client effectue une requête au niveau de la racine pour déterminer le serveur DNS gérant les adresses `.com` .
 - Le client effectue une requête au niveau de du serveurs DNS gérant les adresses `.com` pour déterminer le serveur gérant les adresses `amazon.com`.
 - Le client effectue une requête au niveau de du serveurs DNS gérant les adresses `amazon.com` pour déterminer l'IP de ' `www.amazon.com`.
@@ -471,6 +496,7 @@ Ce sont des serveurs DNS qui appartiennent pas fortement une à une hiérarchie.
 ### Résolution de noms via DNS : requêtes itératives
 Soit un hôte dont l'adresse est  `engineering.nyu.edu` cherchant une adresse pour `gaia.cs.umass.edu`
 Après l'envoi d'une requête itérative (*iterated query*)  :
+
 - Le serveur contacté répons avec le nom du serveur à contacter.
 - Une fois le nom récupéré, ce dernier est stocké dans le cache permettant ainsi d'éviter quelques étapes
 
@@ -481,6 +507,7 @@ Après l'envoi d'une requête itérative (*iterated query*)  :
 Soit un hôte dont l'adresse est  `engineering.nyu.edu` cherchant une adresse pour `gaia.cs.umass.edu`
 
 La requête itérative :
+
 - Met la charge de la résolution du nom sur le serveur de nom contacté.
 
 <img src="https://i.imgur.com/tmxAs1p.png" width=500 />
@@ -553,6 +580,7 @@ Au sein de l'OS, il existe deux types de sockets pour deux services de transport
 
 ### Programmation socket avec UDP
 Avec UDP, une connexion est pas fortement établie entre les processus d'un client et d'un serveur. Cela implique :
+
 - Pas de 'serrage de main' (*handshaking*) avant l'envoi de données.
 - Le processus envoyeur attache explicitement l'adresse IP de destination et le numéro de port pour chaque unité de données (on parle de datagramme).
 - Le processus receveur extrait l'adresse IP de l'envoyeur et le numéro de port du datagramme reçu.
@@ -574,6 +602,7 @@ Avec TCP, le client doit dans un premier temps contacter le serveur :
 - Le serveur doit avoir initialisé un socket pour accepter un contacte provenant d'un client (Socket de bienvenue (*welcoming socket*)).
 
 Par la suite le client contacte le serveur en :
+
 - Créant un socket TCP qui spécifie l'adresse IP, le numéro de port du processus du serveur
 - Une fois le socket créé, le client TCP établis une connexion au serveur TCP
 - Une fois contacté par le client, le serveur TCP crée un nouveau socket pour permettre au processus serveur de communiqué avec ce client en particulier. Cela permet au serveur de communiquer avec plusieurs clients puisque l'IP et le numéro de port est utilisé pour distinguer les différents clients.
@@ -585,6 +614,7 @@ D'un point de vue d'application, TCP fourni un service fiable entre un client et
 <img src="https://i.imgur.com/zwxPTdc.png" title="source: imgur.com" />
 
 On remarque que :
+
 - Il existe deux types de socket : `ServerSocket` et `Socket`.
 - Quand le client 'toque' sur le socket de bienvenue du serveur, le serveur crée un socket de connexion dédié et complète la connexion TCP.
 - L'adresse IP de destination et le numéro de port ne sont pas explicitement attaché aux données d'application envoyées et reçue par le client / le serveur .
@@ -597,18 +627,21 @@ On remarque que :
 ### Services de transport et protocoles 
 La couche transport fourni une communication logique entre des processus d'applications s'exécutant sur des hôtes différents.
 Il existe deux protocole de transport disponible pour les applications internet :
+
 - **TCP**
 - **UDP**
 
 #### Actions de la couche transport <a id=action></a>
 
 Du point de vue de l'envoyeur :
+
 - Un message de la couche application est passé à la couche transport
 - La couche transport détermine les valeurs de l'en-tête 
 - La couche transport créer le segment (message + en-tête)
 - La couche transport passe le segment à la couche réseaux / IP
 
 Du point de vue du récepteur :
+
 - Un segment de la couche réseaux / IP est reçu par la couche de transport
 - La couche transport vérifie les valeurs d'en-tête du segment
 - La couche transport extrait le message du segment.
@@ -700,6 +733,7 @@ L'implémentation d'un tel protocole peut sembler étrange cependant quelques av
 -  Pas de contrôle de congestion. UDP peut envoyer aussi rapidement que désiré et peut fonctionner en cas de congestion.
 
 On retrouve UDP dans :
+
 - La téléphonie internet
 - Les application de streaming multimédia
 - DNS
@@ -921,6 +955,7 @@ $$
 
 #### Mise en pipeline : Formes génériques <a id=pipeline></a>
 Il existe deux formes générique pour la mise en pipeline :
+
 - **Le Go-Back-N** ou (GBN)  : 
 	-  L'envoyeur peut avoir jusqu'à $N$ paquets sans ACK en pipeline.
 	- Le receveur peut seulement envoyer des ACK cumulatif, il ne peut pas ACK un paquet suivant un paquet déclaré manquant
@@ -957,11 +992,13 @@ Du coté de l'envoyeur, une fenêtre de taille $N$ est toujours maintenue limita
 #### Selective Repeat : Envoyeur et receveur
 
 Du point de vue de l'envoyeur :
+
 - Lorsqu'un paquet est reçu de la couche supérieure , si le prochain numéro de séquences de la fenêtre est disponible le paquet est envoyé. 
 - Lorsque le temps attribué à la réception d'un ACK d'un paquet, un timeout est exécuté et le paquet est renvoyé. (Le timer est remis à 0)
 -  Un ACK(n) apparient à un ensemble $\{b, b+N-1\}$ avec $b$ la base de la fenêtre et $N$ la taille de la fenêtre. La réception d'un ACK(n) implique que le paquet n à bien été reçu. Lorsque $n$ paquets n'ont pas encore été ACK, alors la base de la fenêtre est déplacée au prochain paquets sans ACK.
 
 Du point de vue du receveur :
+
 - Un paquet $n$ est reçu. Ce paquet apparient à l'ensemble $\{b, b+N-1\}$ avec $b$ la base de la fenêtre de réception de taille N. Une fois le paquet reçu, un ACK est envoyé. 
 - Si le système de livraison des paquets est défini comme "sans ordre" (*out-of-order*) alors un tampon est utilisé. Si le système de livraison des paquets est défini avec ordre, un tampon est aussi utilisé mais la fenêtre déplace sa base sur le prochain paquet pas encore reçu.
 
@@ -983,6 +1020,7 @@ Il existe un problème ou un paquets est acceptable si la fenêtre de réception
 
 ## 3.5 Transport orienté connexion : TCP
 Pour rappel, TCP est :
+
 - **défini comme "point à point"** : Il existe un envoyeur et un receveur
 - **fiable et avec flux de bytes en ordre** : Pas de "frontière" au niveau des messaes
 - **défini comme "données en duplex intégrale"** : Il y a un flux de données bidirectionnel entre l'envoyeur et le receveur. Le MSS est défini comme la taille maximale de segment.
@@ -1059,6 +1097,7 @@ La solution employée est que le receveur envoi une mise à jour de fenêtre uni
 
 Avant n'importe quel échange de données, le receveur et l'envoyeur effectuent se qu'on appelle une poignée de main (*'handshake'*).
 Cette poignée de main vise à établir deux choses :
+
 - Accord de connexion entre les deux participants.
 - Accord des paramètres de connexions (numéro de séquence initial, MSS, options ,etc.)
 
@@ -1128,6 +1167,7 @@ Dans le cas de **contrôle de congestion assisté par le réseau**, les routeurs
 ### Contrôle de congestion TCP  : AIMD
 Dans ce cas de figure, l'envoyeur peut augmenter sont taux d'envois jusqu'à se qu'une perte de paquet occurre. Dès qu'une perte de paquet est détectée, le taux d'envois est réduit. On remarque alors un comportement en dent de scie.
 On parle alors de :
+
 -  <span style="color:lime">**Incrément additif**</span> : Augmente le taux d'envois de 1 MSS (*'maximum segment size'*) chaque RTT (*'round trip time'*) jusqu'à détection d'une perte.
 - <span style="color:red">**Décrément multiplicatif**</span> : Coupe le taux d'envois par deux à chaque perte de paquet via détection par triple ACK dupliqué (congestion légère). Coupe le taux d'envois par un MSS quand une perte est détectée via timeout (congestion plus sévère).
 
@@ -1279,6 +1319,7 @@ Un contrôleur distant détermines et installe les tables de redirections (*forw
 ### Modèle de service de la couche réseau
 
 Le modèle de service de internet est celui du meilleur effort, c'est à dire aucune garantie sur :
+
 - Le succès de livraison de paquet à une destination.
 - La livraisons dans l'ordre et dans les temps.
 - La disponibilité de la bande passante lors du flux end-end.
@@ -1360,6 +1401,7 @@ Pour déterminer l'adresse de sous-réseaux, il suffit d'appliquer un masque, da
 
 ### Adresses IP spécifiques : 
 Il existes plusieurs adresse dédiées par défaut :
+
 - **L'adresse nulle** : `0.0.0.0`, correspond à l'hôte actuel .
 - **L'adresse pleine**: `255.255.255.255`, diffusion sur le réseau local
 - **Les adresses de boucles**: `127.a.b.c`, par exemple `Localhost` est en `127.0.0.1`
@@ -1383,6 +1425,7 @@ Pour se faire l'hôte diffuse un paquet `DHCP discover msg [optional]`, le serve
 Généralement, le serveur DHCP est colocalisé au sein du routeur, servant tout les sous-réseaux auxquels le routeur est attaché.
 
 Lorsqu'un client sans adresses IP arrive sur un réseaux, les étapes suivantes se produisent :
+
 1. Le client diffuse une demande de reconnaissance pour savoir s'il y a un serveur DHCP
 2. Le serveur DHCP réponds à cette demande et fourni une première adresse IP.
 3. Le client accepte l'adresse IP et et le fait savoir au serveur DHCP
@@ -1470,6 +1513,7 @@ Imaginons que  l'ISP *fly-by-night* acquiert un autre ISP du nom de *ISPs-R-U* e
 
 #### Tables de redirections IP : chevauchement
 Dans cet exemple, les tables de redirections au sein d'internet auront deux entrée se chevauchant en les adresse :
+
 - `200.23.16.0/20` : après le masque `11001000.00010111.0001`
 - `200.23.18.0/23` : après le masque `11001000.00010111.0001001`
 
@@ -1487,6 +1531,7 @@ Le principe est plutôt simple, lorsque un recherche une adresse dans la table d
 
 
 Par exemple  :
+
 - `11001000.00010111.00011000.10100001` est redirigé vers le l'interface 1
 - `11001000.00010111.00010010.10101010` est redirigé vers l'interface 2
 
@@ -1511,6 +1556,7 @@ Les paquets avec une source ou une destination dans le réseaux ci-dessous poss�
 <img src="https://i.imgur.com/uA6o6Wr.png" width=500/>
 
 Tout les appareils d'un même réseaux local possède une adresse  32bit dans un espace d'adressage IP privé. Cela donne comme avantages :
+
 - Il faut uniquement une seul adresse IP publique d'un ISP pour tout les appareil d'un réseaux local.
 - Il peut y avoir un changement d'adressage au sein du réseaux local sans avoir à notifier le monde.
 - On peut changer l'ISP sans changer toutes les adresses d'appareils du réseaux local.
@@ -1633,6 +1679,7 @@ Enfin les suite successive de 0 unique peuvent être représenté par `::` mais 
 ### Vue haut niveau de l'architecture générique d'un routeur
  
  Le routeur est divisé en deux plan :
+
 - **Un plan de routage, gestion et contrôle** : Il s'agit d'un plan de niveau logiciel qui opère sur une fenêtre de quelque millisecondes.
 - **Un plan de transfert de données** : Il s'agit d'un plan de niveau matériel qui opère le plus souvent en nanosecondes.
 
@@ -1648,6 +1695,7 @@ Au niveau du port d'entrée on différencie :
 - **La commutation décentralisée**: Utilise les valeurs de champs d'en-tête IP, recherche recherche le port de sortie via la table de transfert dans la mémoire du port d'entrée. Le but étant de compléter le traitement de paquet en entrée à vitesse de la ligne. Si trop de paquets arrivent par rapport au taux de transfert, alors un système de queue est mis en place.
 
 On parlera de :
+
 - **transfert basé sur la destination** : quand le transfert se base uniquement sur l'adresse IP de destination du paquet.
 - **transfert généralisé**: quand le transfet se base sur n'importe quel ensemble de valeur de champs d'en-tête.
 
@@ -1718,6 +1766,7 @@ Il s'agit d'une couche réseaux "au dessus" d'IP et les messages ICMP sont port�
 
 ### Traceroute et ICMP
 Le principe de la commande traceroute est simple :
+
 - Un hôte source envoi un ensemble de segments UDP à une destination. Le premier ensemble de segment possède un TTL de 1, le second de 2 et ainsi de suite.
 - Le paquet du $n$ ème ensemble arrive au $n$ ème routeur. Le routeur rejette le paquet (a cause du TTL) et envois un message ICMP de type 11 et code 0 ('*TTL expired*') incluant possiblement le noms du routeurs et l'adresse IP.
 - Quand le message ICMP arrive à l'hôte source, le RTT (*round trip time*) est enregistré pour une destination donnée.
@@ -1756,11 +1805,13 @@ Cette propriété a pour conséquence de rendre l'ensemble des chemins optimaux 
 #### Classification d'algorithme de routage
 
 On différencie les algorithmes de routages :
+
 - **Global**: Tout les routeurs découvrent la topologie complète et toutes les information sur les coût de liaison. Avec ces informations, chaque routeurs calcule sont propre arbre de routage. Algorithme dit "état de liaison" (*link state*)
 - **Décentralisé**: Processus itératif de calcul où chaque routeur échange des informations avec ses voisins directs. A l'état initial le routeur ne connaît que les coût le reliant à ses voisins, par la suite les routeurs connaissent leurs distance par rapport à tout les autres routeurs du réseaux. On parle d'algorithme de "vecteur de distance" 
 
 ### Routage par état de liaison (*Link stage routing*)
 Ce principe de routage est divisé en 3 phases :
+
 1. **Découverte de la topologie du graphe** : "état de liaison diffusé", Tout les nœuds possèdent la même information topologique.
 2. **Calcul du chemin de moindre coût** : Chaque nœud calcule le chemin de meilleur coût vers les autres nœuds en utilisant l'algorithme de Dijkstra pour calculer l'arbre couvrant.
 3. **Calcul de la table de transfert** : La table de transfert est calculée dans chaque nœuds pour chaque destination possible à l'aide de l'arbre couvrant de Dijkstra.
@@ -1768,6 +1819,7 @@ Ce principe de routage est divisé en 3 phases :
 #### Phase 1 : Construire les paquets d'état de liaison
 
 Les paquets d'état de liaison sont composés :
+
 - D'un nœud source, un numéro de séquence et d'un âge.
 -  D'un vecteur de distance limité au voisinage .
 
@@ -1827,6 +1879,7 @@ La table de transfert lie les préfixe de destination IP vers une interface loca
 #### OSPF hiérarchique
 
 Il s'agit d'une hiérarchie à deux niveau :
+
 - La zone locale.
 - La structure (*backbone*).
 
@@ -1873,6 +1926,7 @@ Regroupent les routeurs dans des régions appelées "Systèmes autonomes" (AS, a
 ### Routage intra domaine : routage au sein d'un AS
 
 Les protocoles les plus communs au sein du routage intra AS sont :
+
 - **OSPF** : *'Open Shortest Path First'* .
 - **IS-IS** : *'Intermediate System to Intermediate System'*, routage d'état de liaison.
 - **RIP** : *'Routing Information Protocol'*, basé sur DV mais plus autant utilisé.
@@ -1895,6 +1949,7 @@ Le protocole BGP ou *'Boarder Gateway protocol'* est le protocole inter domaine 
 Ce protocole permet aux sous-réseaux de prévenir de leurs existences ainsi que les destinations atteignable au reste d'internet.
 
 BGP fournis à chaque AS un moyen de:
+
 - Obtenir une information d'accessibilité de sous réseaux à partir des AS avoisinant (eBGP ou *external* BGP).
 - Propager les information d'accessibilité a tous les routeur propre à AS (iBGP ou *internal* BGP).
 - Déterminer une "bonne" route vers d'autres réseaux basé sur les information d'accessibilité et les polices mise en place.
@@ -1918,6 +1973,7 @@ Une session BGP est ouverte par deux routeurs BGP (alias pairs) qui échanges de
 
 ### Attributs de chemin et routes BGP
 BGP annonce une route via un préfixe et un attribut. Le préfixe est la destination qui est en train d'être annoncé tandis que les attributs sont :
+
 - `AS-PATH`: liste des AS via lesquels l'annonce de préfixe est passé.
 - `NEXT-HOP`: indique les passerelle AS interne spécifique au premier AS dans le chemin.
 
@@ -1944,6 +2000,7 @@ On parle de routage basé sur une police. La passerelle recevant une annonce de 
 ### Message BGP
 Les messages BGP sont échangés entre pair au dessus d'une connexion TCP.
 On retrouve les message :
+
 - `OPEN` : Ouvre une connexion TCP vers un pair distant BGP et authentifie le pair envoyant des message BGP.
 - `UPDATE`: annonce un nouveau chemin ou retire un ancien chemin.
 - `KEEPALIVe` : garde une connexion vivante en l'absence de `UPDATE`, et ACK les requête `OPEN`.
@@ -1955,6 +2012,7 @@ Si un réseaux AS se retrouve dans le chemin AS annoncé par un voisin, il va le
 
 ### Sélection de route par BGP
 Via BGP, un routeur à la possibilité d'apprendre plus d'une route vers une destination. Le choix de la route revient donc au routeur selon différent critères :
+
 1. **Critère de business**:  Préfère passer par des routes via clients plutôt que pair ou fournisseur.
 2. **Chemin AS le plus court**.
 3. **Critère de la patate chaude** : routeur passerelle le plus proche
@@ -2252,6 +2310,7 @@ Les deux possèdent un principe de stockage et de transfert :
 - **Switch** : appareil de la couche lien (analyse les en-tête de la couche lien).
 
 Les deux possèdent des tables de transfert :
+
 - **Routeur** : détermine les tables en utilisant des algorithmes et l'adresse IP.
 - **Switch** : détermine les tables en utilisant le principe d'inondation, et des adresse MAC.
 
@@ -2321,6 +2380,7 @@ Le but du checksum dans TCP/UDP est de détecter les changements de bits au sein
 
 Il s'agit d'une détection d'erreur un peu plus puissante.
 Soit :
+
 - D : les bits de données.
 - R : les bits de CRC au nombre de $r$.
 - G : les bits de pattern (générateur) au nombre de $r+1$

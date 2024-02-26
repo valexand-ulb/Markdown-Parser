@@ -67,6 +67,9 @@ std::string MarkdownParser::parseTextElements(std::string& md_text_line) {
     // escaping characters
     md_text_line = std::regex_replace(md_text_line, std::regex(regex_rules.esape_characters.first), regex_rules.esape_characters.second);
 
+    // line break
+    //md_text_line = std::regex_replace(md_text_line, std::regex(regex_rules.line_break.first), regex_rules.line_break.second);
+
     return md_text_line;
 }
 
@@ -193,5 +196,6 @@ void MarkdownParser::parseParagraph(std::istringstream& md_text_stream, std::str
         paragraph_text += parseTextElements(terminaison_line) + '\n';
     } while(std::getline(md_text_stream,terminaison_line) && !terminaison_line.empty());
     paragraph_text += "</p>\n";
+
     output_stream << paragraph_text << std::endl;
 }
