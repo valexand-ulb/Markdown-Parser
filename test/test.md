@@ -69,3 +69,5 @@ javascript is not a real language
 ![Alt text](https://i.imgur.com/8nLFCVP.png)
 
 [Link Text](https://www.example.com)
+
+Escaped characters: \* \_ \~ \[ \] \# \! \> \\ \- \`

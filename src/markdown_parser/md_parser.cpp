@@ -63,6 +63,10 @@ std::string MarkdownParser::parseTextElements(std::string& md_text_line) {
 
     // inline code
     md_text_line = std::regex_replace(md_text_line, std::regex(regex_rules.inline_code.first), regex_rules.inline_code.second);
+
+    // escaping characters
+    md_text_line = std::regex_replace(md_text_line, std::regex(regex_rules.esape_characters.first), regex_rules.esape_characters.second);
+
     return md_text_line;
 }
 
@@ -74,7 +78,8 @@ void MarkdownParser::parseHeaders(std::istringstream& md_text_stream, std::strin
         header_level++;
     }
     std::string header_tag = "<h" + std::to_string(header_level) + ">";
-    output_stream << header_tag + line.substr(header_level+1) + "</h" + std::to_string(header_level) + ">" << std::endl;
+    std::string header_text = line.substr(header_level+1);
+    output_stream << header_tag + parseTextElements(header_text) + "</h" + std::to_string(header_level) + ">" << std::endl;
 }
 
 void MarkdownParser::parseBlockQuotes(std::istringstream& md_text_stream, std::stringstream& output_stream, std::string& line) {

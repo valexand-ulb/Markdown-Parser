@@ -17,6 +17,9 @@ struct RegexRemplacementRules {
 
     // blockquotes rules, inline code and horizontal rule rules :
     std::pair<const char *, const char *> inline_code = {"`([^`\n]+)`", "<code>$1</code>"};
+
+    // esacping characters rules :
+    std::pair<const char *, const char *> esape_characters = {R"(\\([\\`*_{}<>\[\]#\+\-\.!~\|]))", "$1"};
 };
 
 #endif //REGEX_RULES_H
